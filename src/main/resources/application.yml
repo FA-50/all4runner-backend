@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: All4Runner
+
+
+jwt:
+  keyId: ${keyId:topofthehead}
+  accessTokenExpiration: ${accessTokenMinute:5}
+  refreshTokenExpiration: ${refreshTokenMinute:720}
