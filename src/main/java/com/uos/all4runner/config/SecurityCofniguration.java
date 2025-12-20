@@ -12,7 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.uos.all4runner.security.JwtFilter;
 import com.uos.all4runner.security.SecurityPath;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityCofniguration {
+
+	private final JwtFilter jwtFilter;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -48,6 +52,7 @@ public class SecurityCofniguration {
 				}
 			)
 			.csrf(AbstractHttpConfigurer::disable)
+			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 			.build();
 	}
 }
