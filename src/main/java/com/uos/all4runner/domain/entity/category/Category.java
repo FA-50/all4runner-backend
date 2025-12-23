@@ -31,6 +31,6 @@ public class Category extends BaseEntity {
 	@JoinColumn(name = "parent_id")
 	private Category parentCategory;
 
-	@OneToMany(mappedBy = "parentCategory")
+	@OneToMany(mappedBy = "category")
 	private List<Route> routes = new ArrayList<Route>();
 }
