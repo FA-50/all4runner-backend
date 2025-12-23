@@ -1,6 +1,15 @@
 spring:
   application:
     name: All4Runner
+  datasource:
+    url: jdbc:postgresql://localhost:5432/All4Runner
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:wjd747}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
 
 
 jwt:

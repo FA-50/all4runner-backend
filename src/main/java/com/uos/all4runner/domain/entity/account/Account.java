@@ -1,27 +1,28 @@
 package com.uos.all4runner.domain.entity.account;
 
+import java.util.ArrayList;
+
 import com.uos.all4runner.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
-import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
+import com.uos.all4runner.domain.entity.route.Route;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
@@ -59,6 +60,13 @@ public class Account extends BaseEntity {
 		orphanRemoval = true
 	)
 	private AccountNetwork accountNetwork;
+
+	@OneToMany(
+		mappedBy = "account",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true
+	)
+	private List<Route> routes = new ArrayList<Route>();
 
 	public Account(
 		String name,
