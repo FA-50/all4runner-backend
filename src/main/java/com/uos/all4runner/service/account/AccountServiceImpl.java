@@ -23,22 +23,40 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void createMember(AccountRequest.Create request) {
 		accountRepository.save(
-			Account.createMember(request)
+			Account.createMember(
+				request.name(),
+				request.email(),
+				request.password(),
+				request.gender(),
+				request.addressGu(),
+				request.addressDong(),
+				request.avgspeed(),
+				request.weight()
+			)
 		);
 	}
 
 	@Override
 	public void createAdmin(AccountRequest.Create request, UUID adminId) {
-		checkAdmin(adminId);
+		checkSuperAdmin(adminId);
 		accountRepository.save(
-			Account.createAdmin(request)
+			Account.createAdmin(
+				request.name(),
+				request.email(),
+				request.password(),
+				request.gender(),
+				request.addressGu(),
+				request.addressDong(),
+				request.avgspeed(),
+				request.weight()
+			)
 		);
 	}
 
-	private void checkAdmin(UUID userId){
+	private void checkSuperAdmin(UUID userId){
 		Account foundedAccount = accountRepository.findByIdOrThrow(userId);
 		PreConditions.validate(
-			foundedAccount.getRole().equals(AccountRole.ADMIN),
+			foundedAccount.getRole().equals(AccountRole.SUPERADMIN),
 			ErrorCode.NOT_ADMIN
 		);
 	}

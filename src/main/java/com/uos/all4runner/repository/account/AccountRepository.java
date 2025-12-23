@@ -1,5 +1,6 @@
 package com.uos.all4runner.repository.account;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,5 @@ public interface AccountRepository extends JpaRepository<Account,UUID> {
 			() -> new CustomException(ErrorCode.FAIL_LOGIN)
 		);
 	}
+	Optional<Account> findByName(String name);
 }
