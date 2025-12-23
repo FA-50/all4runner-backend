@@ -27,4 +27,5 @@ public interface AccountRepository extends JpaRepository<Account,UUID> {
 			() -> new CustomException(ErrorCode.NO_ACCOUNT)
 		);
 	}
+	Optional<Account> findByName(String name);
 }
