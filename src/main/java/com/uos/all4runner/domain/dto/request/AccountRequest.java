@@ -17,7 +17,7 @@ public interface AccountRequest {
 		@NotBlank Gender gender,
 		@NotBlank String addressGu,
 		@NotBlank String addressDong,
-		@Min(value = 0) @Max(value = 20) Integer avgspeed,
+		@Min(value = 0) @Max(value = 20) Double avgspeed,
 		@Min(value = 0) @Max(value = 200) Integer weight
 		){
 	}

@@ -4,6 +4,7 @@ import com.uos.all4runner.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
+import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 
 import jakarta.persistence.CascadeType;
@@ -16,9 +17,11 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
@@ -56,4 +59,58 @@ public class Account extends BaseEntity {
 		orphanRemoval = true
 	)
 	private AccountNetwork accountNetwork;
+
+	public Account(
+		String name,
+		String email,
+		String password,
+		Gender gender,
+		String addressGu,
+		String addressDong,
+		Double avgSpeed,
+		int weight,
+		AccountRole role
+	){
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.gender = gender;
+		this.addressGu = addressGu;
+		this.addressDong = addressDong;
+		this.avgSpeed = avgSpeed;
+		this.weight = weight;
+		this.role = role;
+	}
+
+	public static Account createMember(
+		AccountRequest.Create request
+	){
+		return new Account(
+			request.name(),
+			request.email(),
+			request.password(),
+			request.gender(),
+			request.addressGu(),
+			request.addressDong(),
+			request.avgspeed(),
+			request.weight(),
+			AccountRole.MEMBER
+		);
+	}
+
+	public static Account createAdmin(
+		AccountRequest.Create request
+	){
+		return new Account(
+			request.name(),
+			request.email(),
+			request.password(),
+			request.gender(),
+			request.addressGu(),
+			request.addressDong(),
+			request.avgspeed(),
+			request.weight(),
+			AccountRole.ADMIN
+		);
+	}
 }
