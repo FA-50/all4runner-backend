@@ -39,7 +39,6 @@ public class JwtFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		Long jwtTokenId = jwtService.parseId(authToken);
 		DefaultCurrentUser currentUser = jwtService.getUserDetailFromToken(authToken);
 		AuthenticationToken token = new AuthenticationToken(
 			currentUser,

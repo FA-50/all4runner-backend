@@ -54,8 +54,8 @@ public class JwtService {
 			return false;
 		}
 	}
-	public Long parseId(String token){
-		return Long.valueOf(
+	public UUID parseId(String token){
+		return UUID.fromString(
 			(String)jwtDecoder
 				.decode(token)
 				.getClaims()
