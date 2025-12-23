@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.uos.all4runner.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
+import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
@@ -54,6 +55,10 @@ public class Account extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private AccountRole role;
 
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private AccountStatus status;
+
 	@OneToOne(
 		mappedBy = "account",
 		cascade = CascadeType.ALL,
@@ -88,6 +93,7 @@ public class Account extends BaseEntity {
 		this.avgSpeed = avgSpeed;
 		this.weight = weight;
 		this.role = role;
+		this.status = AccountStatus.ACTIVATED;
 	}
 
 	public static Account createMember(
