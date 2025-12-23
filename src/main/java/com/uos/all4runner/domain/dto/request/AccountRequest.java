@@ -21,4 +21,10 @@ public interface AccountRequest {
 		@Min(value = 0) @Max(value = 200) Double weight
 		){
 	}
+	@Schema(name = "AccountRequest.Login")
+	record Login(
+		@NotBlank String email,
+		@NotBlank String password
+	){
+	}
 }
