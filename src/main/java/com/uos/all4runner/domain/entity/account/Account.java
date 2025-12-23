@@ -35,7 +35,7 @@ public class Account extends BaseEntity {
 	private Gender gender;
 
 	@Column(nullable = false)
-	private String addrssGu;
+	private String addressGu;
 
 	@Column(nullable = false)
 	private String addressDong;
