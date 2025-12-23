@@ -48,7 +48,7 @@ public class Account extends BaseEntity {
 	private Double avgSpeed;
 
 	@Column(nullable = false)
-	private int weight;
+	private Double weight;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -68,7 +68,7 @@ public class Account extends BaseEntity {
 	)
 	private List<Route> routes = new ArrayList<Route>();
 
-	public Account(
+	private Account(
 		String name,
 		String email,
 		String password,
@@ -76,7 +76,7 @@ public class Account extends BaseEntity {
 		String addressGu,
 		String addressDong,
 		Double avgSpeed,
-		int weight,
+		Double weight,
 		AccountRole role
 	){
 		this.name = name;
@@ -91,33 +91,47 @@ public class Account extends BaseEntity {
 	}
 
 	public static Account createMember(
-		AccountRequest.Create request
+		String name,
+		String email,
+		String password,
+		Gender gender,
+		String addressGu,
+		String addressDong,
+		Double avgspeed,
+		Double weight
 	){
 		return new Account(
-			request.name(),
-			request.email(),
-			request.password(),
-			request.gender(),
-			request.addressGu(),
-			request.addressDong(),
-			request.avgspeed(),
-			request.weight(),
+			name,
+			email,
+			password,
+			gender,
+			addressGu,
+			addressDong,
+			avgspeed,
+			weight,
 			AccountRole.MEMBER
 		);
 	}
 
 	public static Account createAdmin(
-		AccountRequest.Create request
+		String name,
+		String email,
+		String password,
+		Gender gender,
+		String addressGu,
+		String addressDong,
+		Double avgspeed,
+		Double weight
 	){
 		return new Account(
-			request.name(),
-			request.email(),
-			request.password(),
-			request.gender(),
-			request.addressGu(),
-			request.addressDong(),
-			request.avgspeed(),
-			request.weight(),
+			name,
+			email,
+			password,
+			gender,
+			addressGu,
+			addressDong,
+			avgspeed,
+			weight,
 			AccountRole.ADMIN
 		);
 	}
