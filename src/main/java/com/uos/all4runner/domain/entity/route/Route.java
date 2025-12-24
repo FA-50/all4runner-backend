@@ -1,6 +1,6 @@
 package com.uos.all4runner.domain.entity.route;
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.constant.RouteStatus;
 import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.domain.entity.category.Category;
