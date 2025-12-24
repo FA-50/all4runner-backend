@@ -12,17 +12,19 @@ import com.uos.all4runner.domain.entity.account.Account;
 public interface AccountService {
 	void createMember(AccountRequest.Create request);
 
-	void createAdmin(AccountRequest.Create request, UUID adminId);
+	void createAdmin(AccountRequest.Create request);
 
 	void deleteAccount(UUID currentId, UUID subjectId);
 
-	void deleteAccountPermanently(UUID currentId, UUID subjectId);
+	void deleteAccountPermanently(UUID subjectId);
 
-	void restoreAccount(UUID currentId, UUID subjectId);
+	void restoreAccount(UUID subjectId);
 
 	void updateAccount(UUID currentId, UUID subjectId, AccountRequest.Update request);
 
 	void updatePassword(UUID currentId, AccountRequest.UpdatePassword request);
+
+	void updatePasswordByAdmin(UUID subjectId, String newPassword);
 
 	AccountResponse.Details getAccountDetails(UUID currentId, UUID subjectId);
 

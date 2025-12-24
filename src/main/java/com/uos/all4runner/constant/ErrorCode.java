@@ -17,7 +17,7 @@ public enum ErrorCode {
 	INVALID_PASSWORD(HttpStatus.BAD_REQUEST,"기존 비밀번호와 동일한 비밀번호가 아닙니다."),
 	SAME_PASSWORD(HttpStatus.BAD_REQUEST, "기존 비밀번호와 동일한 비밀번호입니다"),
 	ACCOUNT_ACCESS_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "계정에 권한이 없습니다."),
-	CANNOT_REMOVE_SUPERADMIN(HttpStatus.BAD_REQUEST, "슈퍼 관리자 계정을 삭제할 수 없습니다.");
+	CANNOT_MODIFY_SUPERADMIN(HttpStatus.BAD_REQUEST, "슈퍼 관리자 계정을 수정/삭제할 수 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;

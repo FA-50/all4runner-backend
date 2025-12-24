@@ -45,8 +45,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@PreAuthorize("hasRole('SUPERADMIN') and #adminId == authentication.principal.id")
-	public void createAdmin(AccountRequest.Create request, UUID adminId) {
+	@PreAuthorize("hasRole('SUPERADMIN')")
+	public void createAdmin(AccountRequest.Create request) {
 		accountRepository.save(
 			Account.createAdmin(
 				request.name(),
@@ -69,28 +69,33 @@ public class AccountServiceImpl implements AccountService {
 		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
 		PreConditions.validate(
 			!subjectAccount.getRole().equals(AccountRole.SUPERADMIN),
-			ErrorCode.CANNOT_REMOVE_SUPERADMIN
+			ErrorCode.CANNOT_MODIFY_SUPERADMIN
 		);
 
 		subjectAccount.delete();
 	}
 
 	@Override
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'}) and #currentId == authentication.principal.id")
-	public void deleteAccountPermanently(UUID currentId, UUID subjectId) {
-
+	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	public void deleteAccountPermanently(UUID subjectId) {
 		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
+
 		PreConditions.validate(
 			!subjectAccount.getRole().equals(AccountRole.SUPERADMIN),
-			ErrorCode.CANNOT_REMOVE_SUPERADMIN
+			ErrorCode.CANNOT_MODIFY_SUPERADMIN
+		);
+
+		PreConditions.validate(
+			subjectAccount.getStatus().equals(AccountStatus.REMOVED),
+			ErrorCode.NOT_REMOVED
 		);
 
 		accountRepository.deleteById(subjectId);
 	}
 
 	@Override
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'}) and #currentId == authentication.principal.id")
-	public void restoreAccount(UUID currentId, UUID subjectId) {
+	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	public void restoreAccount(UUID subjectId) {
 		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
 
 		PreConditions.validate(
@@ -136,6 +141,19 @@ public class AccountServiceImpl implements AccountService {
 		);
 
 		foundedAccount.updatePassword(passwordEncoder.encode(request.newPassword()));
+	}
+
+	@Override
+	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	public void updatePasswordByAdmin(UUID subjectId, String newPassword) {
+		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
+
+		PreConditions.validate(
+			!subjectAccount.getRole().equals(AccountRole.SUPERADMIN),
+			ErrorCode.CANNOT_MODIFY_SUPERADMIN
+		);
+
+		subjectAccount.updatePassword(passwordEncoder.encode(newPassword));
 	}
 
 	@Override
