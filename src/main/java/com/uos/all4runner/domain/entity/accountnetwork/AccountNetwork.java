@@ -1,7 +1,7 @@
 package com.uos.all4runner.domain.entity.accountnetwork;
 
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.domain.entity.network.Network;
 

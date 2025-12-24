@@ -2,11 +2,10 @@ package com.uos.all4runner.domain.entity.account;
 
 import java.util.ArrayList;
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
-import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 import com.uos.all4runner.domain.entity.route.Route;
 
