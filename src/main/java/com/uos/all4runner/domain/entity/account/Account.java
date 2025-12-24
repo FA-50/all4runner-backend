@@ -141,4 +141,32 @@ public class Account extends BaseEntity {
 			AccountRole.ADMIN
 		);
 	}
+
+	public void delete(){
+		this.status = AccountStatus.REMOVED;
+	}
+
+	public void restore(){
+		this.status = AccountStatus.ACTIVATED;
+	}
+
+	public void update(
+		String name,
+		Gender gender,
+		String addressGu,
+		String addressDong,
+		Double avgSpeed,
+		Double weight
+	){
+		this.name = name;
+		this.gender = gender;
+		this.addressGu = addressGu;
+		this.addressDong = addressDong;
+		this.avgSpeed = avgSpeed;
+		this.weight = weight;
+	}
+
+	public void updatePassword(String password){
+		this.password = password;
+	}
 }
