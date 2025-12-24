@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DefaultCurrentUser implements UserDetails, CurrentUser {
-	private UUID accountId;
+	private UUID id;
 	private String email;
 	private AccountRole role;
 	@Override
@@ -38,7 +38,7 @@ public class DefaultCurrentUser implements UserDetails, CurrentUser {
 
 	@Override
 	public UUID getId() {
-		return accountId;
+		return id;
 	}
 
 	@Override

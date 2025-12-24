@@ -1,6 +1,6 @@
 package com.uos.all4runner.domain.entity.category;
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.domain.entity.route.Route;
 
 import jakarta.persistence.CascadeType;

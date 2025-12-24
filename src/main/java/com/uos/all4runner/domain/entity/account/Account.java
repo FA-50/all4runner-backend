@@ -2,10 +2,10 @@ package com.uos.all4runner.domain.entity.account;
 
 import java.util.ArrayList;
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
+import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
-import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 import com.uos.all4runner.domain.entity.route.Route;
 
@@ -54,6 +54,10 @@ public class Account extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private AccountRole role;
 
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private AccountStatus status;
+
 	@OneToOne(
 		mappedBy = "account",
 		cascade = CascadeType.ALL,
@@ -88,6 +92,7 @@ public class Account extends BaseEntity {
 		this.avgSpeed = avgSpeed;
 		this.weight = weight;
 		this.role = role;
+		this.status = AccountStatus.ACTIVATED;
 	}
 
 	public static Account createMember(
@@ -134,5 +139,33 @@ public class Account extends BaseEntity {
 			weight,
 			AccountRole.ADMIN
 		);
+	}
+
+	public void delete(){
+		this.status = AccountStatus.REMOVED;
+	}
+
+	public void restore(){
+		this.status = AccountStatus.ACTIVATED;
+	}
+
+	public void update(
+		String name,
+		Gender gender,
+		String addressGu,
+		String addressDong,
+		Double avgSpeed,
+		Double weight
+	){
+		this.name = name;
+		this.gender = gender;
+		this.addressGu = addressGu;
+		this.addressDong = addressDong;
+		this.avgSpeed = avgSpeed;
+		this.weight = weight;
+	}
+
+	public void updatePassword(String password){
+		this.password = password;
 	}
 }

@@ -11,7 +11,7 @@ import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.exception.CustomException;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account,UUID> {
+public interface AccountRepository extends JpaRepository<Account,UUID>, AccountRepositoryCustom {
 	default Account findByIdOrThrow(UUID accountId){
 		return findById(accountId).orElseThrow(
 			() -> new CustomException(ErrorCode.NO_ACCOUNT)
@@ -27,5 +27,6 @@ public interface AccountRepository extends JpaRepository<Account,UUID> {
 			() -> new CustomException(ErrorCode.NO_ACCOUNT)
 		);
 	}
-	Optional<Account> findByName(String name);
+
+	void deleteById(UUID accountId);
 }

@@ -4,6 +4,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.ErrorCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.account.Account;
@@ -28,7 +29,12 @@ public class AuthServiceImpl implements AuthService {
 
 		PreConditions.validate(
 			passwordEncoder.matches(request.password(),foundedAccount.getPassword()),
-			ErrorCode.NOT_ADMIN
+			ErrorCode.FAIL_LOGIN
+		);
+
+		PreConditions.validate(
+			foundedAccount.getStatus().equals(AccountStatus.ACTIVATED),
+			ErrorCode.FAIL_LOGIN
 		);
 
 		String accessToken = jwtService.issue(

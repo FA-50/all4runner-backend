@@ -1,4 +1,4 @@
-package com.uos.all4runner.common;
+package com.uos.all4runner.domain.entity.common;
 
 import java.time.Instant;
 import java.util.UUID;

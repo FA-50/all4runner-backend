@@ -2,7 +2,7 @@ package com.uos.all4runner.domain.entity.review;
 
 import java.util.UUID;
 
-import com.uos.all4runner.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.domain.entity.route.Route;
 
 import jakarta.persistence.Column;

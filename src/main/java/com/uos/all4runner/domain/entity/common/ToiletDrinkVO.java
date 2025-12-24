@@ -1,4 +1,4 @@
-package com.uos.all4runner.common;
+package com.uos.all4runner.domain.entity.common;
 
 import jakarta.persistence.Embeddable;
 

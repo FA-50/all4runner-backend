@@ -1,7 +1,7 @@
 package com.uos.all4runner.domain.entity.routelink;
 
-import com.uos.all4runner.common.BaseEntity;
-import com.uos.all4runner.common.ToiletDrinkVO;
+import com.uos.all4runner.domain.entity.common.BaseEntity;
+import com.uos.all4runner.domain.entity.common.ToiletDrinkVO;
 import com.uos.all4runner.constant.LinkType;
 import com.uos.all4runner.domain.entity.route.Route;
 
