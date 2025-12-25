@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uos.all4runner.common.api.ApiResult;
 import com.uos.all4runner.constant.SuccessCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
+import com.uos.all4runner.security.TokenPair;
 import com.uos.all4runner.service.auth.AuthService;
 
 import jakarta.validation.Valid;
@@ -38,7 +39,7 @@ public class AuthContoller implements AuthSwaggerSupoorter {
 
 	@Override
 	@PostMapping("/login")
-	public ResponseEntity<Pair<String,String>> logIn(
+	public ResponseEntity<ApiResult<TokenPair>> logIn(
 		@RequestBody @Valid AccountRequest.Login login
 	) {
 		return ApiResult.token(

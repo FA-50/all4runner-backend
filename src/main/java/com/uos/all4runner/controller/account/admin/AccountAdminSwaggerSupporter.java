@@ -100,7 +100,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "paging" , description = "페이지번호 / 페이지에 표현될 데이터수")
 		}
 	)
-	ResponseEntity<Page<AccountResponse.Search>> getAccountSearches(
+	ResponseEntity<ApiResult<Page<AccountResponse.Search>>> getAccountSearches(
 		String name,
 		Paging paging
 	);

@@ -118,7 +118,7 @@ public class AccountAdminController implements AccountAdminSwaggerSupporter{
 
 	@Override
 	@GetMapping
-	public ResponseEntity<Page<AccountResponse.Search>> getAccountSearches(
+	public ResponseEntity<ApiResult<Page<AccountResponse.Search>>> getAccountSearches(
 		@RequestParam(required = false) String name,
 		@ModelAttribute @Valid Paging paging
 	) {

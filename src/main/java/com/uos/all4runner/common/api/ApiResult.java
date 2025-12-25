@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.util.Pair;
 import com.uos.all4runner.constant.SuccessCode;
+import com.uos.all4runner.security.TokenPair;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
@@ -48,15 +49,27 @@ public class ApiResult<T> {
 		);
 	}
 
-	public static <T> ResponseEntity<Page<T>> page(SuccessCode successCode, Page<T> page) {
+	public static <T> ResponseEntity<ApiResult<Page<T>>> page(SuccessCode successCode, Page<T> page) {
 		return ResponseEntity
 			.status(successCode.getStatus())
-			.body(page);
+			.body(
+				new ApiResult<Page<T>>(
+					successCode.getStatus().toString(),
+					successCode.getDescription(),
+					page
+			)
+		);
 	}
 
-	public static ResponseEntity<Pair<String,String>> token(SuccessCode successCode, Pair<String,String> tokenPair) {
+	public static ResponseEntity<ApiResult<TokenPair>> token(SuccessCode successCode, TokenPair tokenPair) {
 		return ResponseEntity
 			.status(successCode.getStatus())
-			.body(tokenPair);
+			.body(
+				new ApiResult<TokenPair>(
+					successCode.getStatus().toString(),
+					successCode.getDescription(),
+					tokenPair
+				)
+			);
 	}
 }
