@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.util.Pair;
 import com.uos.all4runner.constant.SuccessCode;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class ApiResult<T> {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private final T data;
 
-	public static <T> ResponseEntity<ApiResult<T>> toResponseEntity(SuccessCode successCode, T data) {
+	private static <T> ResponseEntity<ApiResult<T>> toResponseEntity(SuccessCode successCode, T data) {
 		return ResponseEntity.status(successCode.getStatus())
 			.body(
 				new ApiResult<T>(
@@ -49,5 +50,11 @@ public class ApiResult<T> {
 		return ResponseEntity
 			.status(successCode.getStatus())
 			.body(page);
+	}
+
+	public static ResponseEntity<Pair<String,String>> token(SuccessCode successCode, Pair<String,String> tokenPair) {
+		return ResponseEntity
+			.status(successCode.getStatus())
+			.body(tokenPair);
 	}
 }
