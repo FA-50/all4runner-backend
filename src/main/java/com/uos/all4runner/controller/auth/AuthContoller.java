@@ -42,7 +42,7 @@ public class AuthContoller implements AuthSwaggerSupoorter {
 	public ResponseEntity<ApiResult<TokenPair>> logIn(
 		@RequestBody @Valid AccountRequest.Login login
 	) {
-		return ApiResult.token(
+		return ApiResult.data(
 			SuccessCode.LOGIN_SUCCESS,
 			authService.LoginAccount(login)
 		);

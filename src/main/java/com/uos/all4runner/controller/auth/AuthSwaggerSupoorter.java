@@ -6,6 +6,7 @@ import org.springframework.data.util.Pair;
 import com.uos.all4runner.common.api.ApiResult;
 import com.uos.all4runner.controller.common.SwaggerSupoorter;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
+import com.uos.all4runner.security.TokenPair;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,5 +28,5 @@ public interface AuthSwaggerSupoorter extends SwaggerSupoorter {
 		summary = "로그인 기능 추가",
 		description = "로그인을 수행하여 JWT 토큰을 발급받는 API"
 	)
-	ResponseEntity<Pair<String,String>> logIn(AccountRequest.Login login);
+	ResponseEntity<ApiResult<TokenPair>> logIn(AccountRequest.Login login);
 }

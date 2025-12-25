@@ -60,16 +60,4 @@ public class ApiResult<T> {
 			)
 		);
 	}
-
-	public static ResponseEntity<ApiResult<TokenPair>> token(SuccessCode successCode, TokenPair tokenPair) {
-		return ResponseEntity
-			.status(successCode.getStatus())
-			.body(
-				new ApiResult<TokenPair>(
-					successCode.getStatus().toString(),
-					successCode.getDescription(),
-					tokenPair
-				)
-			);
-	}
 }
