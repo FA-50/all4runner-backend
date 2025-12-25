@@ -24,6 +24,12 @@ public class AuthServiceImpl implements AuthService {
 	private final PojoJwtProperties pojoJwtProperties;
 
 	@Override
+	public boolean checkDuplicateEmail(String email) {
+		Account foundedAccount = accountRepository.findByEmail(email).orElse(null);
+		return foundedAccount != null;
+	}
+
+	@Override
 	public Pair<String,String> LoginAccount(AccountRequest.Login request) {
 		Account foundedAccount = accountRepository.findByEmailOrThrow(request.email());
 
