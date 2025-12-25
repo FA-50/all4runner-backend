@@ -9,7 +9,6 @@ import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
 
 public interface AccountService {
-	boolean checkDuplicateEmail(String email);
 
 	void createMember(AccountRequest.Create request);
 
