@@ -2,6 +2,7 @@ package com.uos.all4runner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -47,6 +48,7 @@ public class SecurityCofniguration {
 			.authorizeHttpRequests(
 				auth -> {
 					auth.requestMatchers(SecurityPath.PUBLIC).permitAll();
+					auth.requestMatchers(HttpMethod.POST,"/api/accounts").permitAll();
 					auth.requestMatchers(SecurityPath.ADMIN).hasRole("ADMIN");
 					auth.anyRequest().authenticated();
 				}

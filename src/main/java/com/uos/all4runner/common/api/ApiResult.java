@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.util.Pair;
 import com.uos.all4runner.constant.SuccessCode;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Hidden
 public class ApiResult<T> {
 
 	private final String statusCode;
