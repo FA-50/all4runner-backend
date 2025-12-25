@@ -67,6 +67,7 @@ public class AccountServiceImpl implements AccountService {
 		checkModifyPermission(currentId, subjectId);
 
 		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
+
 		PreConditions.validate(
 			!subjectAccount.getRole().equals(AccountRole.SUPERADMIN),
 			ErrorCode.CANNOT_MODIFY_SUPERADMIN
@@ -159,7 +160,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	@PreAuthorize("#currentId == authentication.principal.id")
 	public AccountResponse.Details getAccountDetails(UUID currentId, UUID subjectId) {
-		checkReadPermission(currentId, subjectId);
+			checkReadPermission(currentId, subjectId);
 		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
 		return new AccountResponse.Details(
 			subjectAccount.getId(),

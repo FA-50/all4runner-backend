@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class AuthContoller implements AuthSwaggerSupoorter {
 	@Override
 	@PostMapping("/login")
 	public ResponseEntity<Pair<String,String>> logIn(
-		@Valid AccountRequest.Login login
+		@RequestBody @Valid AccountRequest.Login login
 	) {
 		return ApiResult.token(
 			SuccessCode.LOGIN_SUCCESS,

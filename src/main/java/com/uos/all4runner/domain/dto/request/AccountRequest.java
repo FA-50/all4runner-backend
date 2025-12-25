@@ -53,4 +53,13 @@ public interface AccountRequest {
 		) String newPassword
 	){
 	}
+
+	@Schema(name = "AccountRequest.UpdatePasswordAdmin")
+	record UpdatePasswordAdmin(
+		@Pattern(
+			regexp = "^(?=.{8,}$)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*$",
+			message = "비밀번호는 최소 8자 이상이면서 특수문자를 하나 포함해야합니다."
+		) String newPassword
+	){
+	}
 }
