@@ -11,7 +11,6 @@ import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.repository.account.AccountRepository;
 import com.uos.all4runner.security.JwtService;
 import com.uos.all4runner.security.PojoJwtProperties;
-import com.uos.all4runner.security.TokenPair;
 import com.uos.all4runner.util.PreConditions;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public TokenPair LoginAccount(AccountRequest.Login request) {
+	public Pair<String,String> LoginAccount(AccountRequest.Login request) {
 		Account foundedAccount = accountRepository.findByEmailOrThrow(request.email());
 
 		PreConditions.validate(
@@ -54,6 +53,6 @@ public class AuthServiceImpl implements AuthService {
 			pojoJwtProperties.getJwt().refreshTokenExpiration()
 		);
 
-		return TokenPair.of(accessToken, refreshToken);
+		return Pair.of(accessToken, refreshToken);
 	}
 }
