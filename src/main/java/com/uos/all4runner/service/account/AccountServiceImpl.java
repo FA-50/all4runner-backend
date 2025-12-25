@@ -29,6 +29,12 @@ public class AccountServiceImpl implements AccountService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
+	public boolean checkDuplicateEmail(String email) {
+		Account foundedAccount = accountRepository.findByEmail(email).orElse(null);
+		return foundedAccount != null;
+	}
+
+	@Override
 	public void createMember(AccountRequest.Create request) {
 		accountRepository.save(
 			Account.createMember(
