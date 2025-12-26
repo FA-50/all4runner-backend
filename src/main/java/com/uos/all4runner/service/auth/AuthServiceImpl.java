@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
 		PreConditions.validate(
 			foundedAccount.getStatus().equals(AccountStatus.ACTIVATED),
-			ErrorCode.FAIL_LOGIN
+			ErrorCode.REMOVED_ACCOUNT
 		);
 
 		String accessToken = jwtService.issue(
