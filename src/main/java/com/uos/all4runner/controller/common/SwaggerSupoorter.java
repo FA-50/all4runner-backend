@@ -1,7 +1,7 @@
 package com.uos.all4runner.controller.common;
 
-import com.uos.all4runner.common.api.ApiErrorResponse;
-import com.uos.all4runner.common.api.ApiResult;
+import com.uos.all4runner.common.response.ApiErrorResponse;
+import com.uos.all4runner.common.response.ApiResultResponse;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 	@ApiResponse(
 		responseCode = "200",
 		description = "요청 성공",
-		content = @Content(schema = @Schema(implementation = ApiResult.class))
+		content = @Content(schema = @Schema(implementation = ApiResultResponse.class))
 	),
 
 	@ApiResponse(

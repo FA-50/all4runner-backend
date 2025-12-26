@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
-import com.uos.all4runner.common.api.ApiResult;
-import com.uos.all4runner.common.page.Paging;
+import com.uos.all4runner.common.response.ApiResultResponse;
+import com.uos.all4runner.common.request.Paging;
 import com.uos.all4runner.controller.common.SwaggerSupoorter;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
@@ -23,7 +23,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 		summary = "ADMIN 계정을 생성합니다.",
 		description = "ADMIN 권한의 계정을 생성하는 API"
 	)
-	ResponseEntity<ApiResult<Void>> createAdmin(
+	ResponseEntity<ApiResultResponse<Void>> createAdmin(
 		AccountRequest.Create request
 	);
 
@@ -37,7 +37,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "accountId" , description = "삭제를 수행할 계정ID")
 		}
 	)
-	ResponseEntity<ApiResult<Void>> deleteAccount(
+	ResponseEntity<ApiResultResponse<Void>> deleteAccount(
 		@Parameter(hidden=true) DefaultCurrentUser currentUser,
 		UUID accountId
 	);
@@ -53,7 +53,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "accountId" , description = "삭제를 수행할 계정ID")
 		}
 	)
-	ResponseEntity<ApiResult<Void>> deleteAccountPermanently(UUID accountId);
+	ResponseEntity<ApiResultResponse<Void>> deleteAccountPermanently(UUID accountId);
 
 	@Operation(
 		summary = "계정을 복구합니다.",
@@ -62,7 +62,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "accountId" , description = "복구할 계정ID")
 		}
 	)
-	ResponseEntity<ApiResult<Void>> restoreAccount(UUID accountId);
+	ResponseEntity<ApiResultResponse<Void>> restoreAccount(UUID accountId);
 
 	@Operation(
 		summary = "계정의 비밀번호를 수정합니다.",
@@ -75,7 +75,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "newPassword" , description = "새로운 비밀번호")
 		}
 	)
-	ResponseEntity<ApiResult<Void>> updatePassword(
+	ResponseEntity<ApiResultResponse<Void>> updatePassword(
 		UUID accountId,
 		AccountRequest.UpdatePasswordAdmin request
 	);
@@ -87,7 +87,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "accountId" , description = "조회할 계정ID")
 		}
 	)
-	ResponseEntity<ApiResult<AccountResponse.Details>> getAccountDetails(
+	ResponseEntity<ApiResultResponse<AccountResponse.Details>> getAccountDetails(
 		@Parameter(hidden = true) DefaultCurrentUser currentUser,
 		UUID accountId
 	);
@@ -100,7 +100,7 @@ public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
 			@Parameter(name = "paging" , description = "페이지번호 / 페이지에 표현될 데이터수")
 		}
 	)
-	ResponseEntity<ApiResult<Page<AccountResponse.Search>>> getAccountSearches(
+	ResponseEntity<ApiResultResponse<Page<AccountResponse.Search>>> getAccountSearches(
 		String name,
 		Paging paging
 	);

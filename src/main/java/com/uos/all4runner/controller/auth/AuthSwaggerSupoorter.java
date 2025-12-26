@@ -2,7 +2,7 @@ package com.uos.all4runner.controller.auth;
 
 import org.springframework.http.ResponseEntity;
 
-import com.uos.all4runner.common.api.ApiResult;
+import com.uos.all4runner.common.response.ApiResultResponse;
 import com.uos.all4runner.controller.common.SwaggerSupoorter;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
@@ -21,11 +21,11 @@ public interface AuthSwaggerSupoorter extends SwaggerSupoorter {
 			@Parameter(name = "email" , description = "계정 이메일")
 		}
 	)
-	ResponseEntity<ApiResult<Boolean>> isDuplicateEmail(String email);
+	ResponseEntity<ApiResultResponse<Boolean>> isDuplicateEmail(String email);
 
 	@Operation(
 		summary = "로그인 기능 추가",
 		description = "로그인을 수행하여 JWT 토큰을 발급받는 API"
 	)
-	ResponseEntity<ApiResult<AccountResponse.Login>>logIn(AccountRequest.Login login);
+	ResponseEntity<ApiResultResponse<AccountResponse.Login>>logIn(AccountRequest.Login login);
 }
