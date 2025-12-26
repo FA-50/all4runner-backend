@@ -54,14 +54,16 @@ public class JwtService {
 			return false;
 		}
 	}
+
 	public UUID parseId(String token){
 		return UUID.fromString(
 			(String)jwtDecoder
 				.decode(token)
 				.getClaims()
-				.get("jti")
+				.get(ACCOUNTID_CLAIM_KEY)
 		);
 	}
+
 	public DefaultCurrentUser getUserDetailFromToken(String token){
 		Map<String,Object> claims =  jwtDecoder
 			.decode(token)

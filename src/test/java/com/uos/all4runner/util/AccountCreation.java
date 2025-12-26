@@ -2,6 +2,7 @@ package com.uos.all4runner.util;
 
 import java.util.UUID;
 
+import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 
 import com.uos.all4runner.constant.AccountRole;
@@ -11,11 +12,17 @@ import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.security.DefaultCurrentUser;
 
 public class AccountCreation {
+
+	public static final Pair<String,String> PASSWORD = Pair.of(
+		"wjdtn@@!!@",
+		"$2a$10$m/BzNm4PYtv7MrxuSzNg5.DYxPIpOCSB4LSh4JbrdA4HRDmgwJdwi"
+	);
+
 	public static Account createMember(){
 		return Account.createMember(
 			"멤버테스터",
 			"member@naver.com",
-			"wjdu7471231",
+			PASSWORD.getSecond(),
 			Gender.MALE,
 			"동대문구",
 			"휘경동",
@@ -25,10 +32,10 @@ public class AccountCreation {
 	}
 
 	public static Account createAdmin(){
-		return Account.createMember(
+		return Account.createAdmin(
 			"어드민테스터",
 			"admin@naver.com",
-			"wjdu7471231",
+			PASSWORD.getSecond(),
 			Gender.MALE,
 			"동대문구",
 			"휘경동",
@@ -41,7 +48,7 @@ public class AccountCreation {
 		return new AccountRequest.Create(
 			"멤버테스터",
 			"member@naver.com",
-			"wjdu7471231",
+			PASSWORD.getSecond(),
 			Gender.MALE,
 			"동대문구",
 			"휘경동",
@@ -49,6 +56,4 @@ public class AccountCreation {
 			80D
 		);
 	}
-
-
 }
