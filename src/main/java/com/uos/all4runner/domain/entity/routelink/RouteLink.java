@@ -1,20 +1,31 @@
 package com.uos.all4runner.domain.entity.routelink;
 
-import com.uos.all4runner.domain.entity.common.BaseEntity;
-import com.uos.all4runner.domain.entity.common.ToiletDrinkVO;
+import java.util.UUID;
+
+import org.hibernate.annotations.UuidGenerator;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.uos.all4runner.constant.LinkType;
 import com.uos.all4runner.domain.entity.route.Route;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "routelink")
-public class RouteLink extends BaseEntity {
+public class RouteLink {
+
+	@Id
+	@UuidGenerator
+	@Column(name = "id", nullable = false, updatable = false)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected UUID id;
 
 	@Column(nullable = false)
 	private String geojson;
@@ -32,12 +43,13 @@ public class RouteLink extends BaseEntity {
 	private double linkKcal;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private LinkType linkType;
 
-	@Embedded
-	private ToiletDrinkVO toiletDrinkVO;
+	@Column(nullable = false)
+	private String drinkToilet;
 
 	@ManyToOne
-	@JoinColumn(name = "route_id")
+	@JoinColumn(name = "route_id", nullable = false)
 	private Route route;
 }

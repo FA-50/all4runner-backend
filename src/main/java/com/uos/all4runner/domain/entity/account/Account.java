@@ -7,6 +7,7 @@ import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
+import com.uos.all4runner.domain.entity.review.Review;
 import com.uos.all4runner.domain.entity.route.Route;
 
 import jakarta.persistence.CascadeType;
@@ -72,7 +73,14 @@ public class Account extends BaseEntity {
 		cascade = CascadeType.ALL,
 		orphanRemoval = true
 	)
-	private List<Route> routes = new ArrayList<Route>();
+	private List<Route> routes = new ArrayList<>();
+
+	@OneToMany(
+		mappedBy = "account",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true
+	)
+	private List<Review> reviews = new ArrayList<>();
 
 	private Account(
 		String name,
