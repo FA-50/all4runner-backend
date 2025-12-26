@@ -25,7 +25,7 @@ public class AccountCreation {
 	}
 
 	public static Account createAdmin(){
-		return Account.createMember(
+		return Account.createAdmin(
 			"어드민테스터",
 			"admin@naver.com",
 			"wjdu7471231",
