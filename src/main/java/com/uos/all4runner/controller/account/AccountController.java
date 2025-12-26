@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uos.all4runner.common.api.ApiResult;
+import com.uos.all4runner.common.response.ApiResultResponse;
 import com.uos.all4runner.constant.SuccessCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
@@ -32,19 +32,19 @@ public class AccountController implements AccountSwaggerSupporter {
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ApiResult<Void>> createMember(
+	public ResponseEntity<ApiResultResponse<Void>> createMember(
 		@RequestBody @Valid AccountRequest.Create request
 	) {
 		accountService.createMember(request);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_CREATE_SUCCESS
 		);
 	}
 
 	@Override
 	@DeleteMapping
-	public ResponseEntity<ApiResult<Void>> deleteAccount(
+	public ResponseEntity<ApiResultResponse<Void>> deleteAccount(
 	 @AuthenticationPrincipal DefaultCurrentUser currentUser
 	) {
 		accountService.deleteAccount(
@@ -52,14 +52,14 @@ public class AccountController implements AccountSwaggerSupporter {
 			currentUser.getId()
 		);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_DELETE_SUCCESS
 		);
 	}
 
 	@Override
 	@PutMapping
-	public ResponseEntity<ApiResult<Void>> updateAccount(
+	public ResponseEntity<ApiResultResponse<Void>> updateAccount(
 	 	@AuthenticationPrincipal DefaultCurrentUser currentUser,
 		@PathVariable UUID accountId,
 		@RequestBody @Valid AccountRequest.Update request
@@ -70,14 +70,14 @@ public class AccountController implements AccountSwaggerSupporter {
 			request
 		);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_UPDATE_SUCCESS
 		);
 	}
 
 	@Override
 	@PatchMapping("/password")
-	public ResponseEntity<ApiResult<Void>> updatePassword(
+	public ResponseEntity<ApiResultResponse<Void>> updatePassword(
 		@AuthenticationPrincipal DefaultCurrentUser currentUser,
 		@RequestBody @Valid	AccountRequest.UpdatePassword request
 	) {
@@ -85,17 +85,17 @@ public class AccountController implements AccountSwaggerSupporter {
 			currentUser.getId(),
 			request
 		);
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_PASSWORD_UPDATE_SUCCESS
 		);
 	}
 
 	@Override
 	@GetMapping
-	public ResponseEntity<ApiResult<AccountResponse.Details>> getAccountDetails(
+	public ResponseEntity<ApiResultResponse<AccountResponse.Details>> getAccountDetails(
 		@AuthenticationPrincipal DefaultCurrentUser currentUser
 	) {
-		return ApiResult.data(
+		return ApiResultResponse.data(
 			SuccessCode.ACCOUNT_DATA_RESPONSE_SUCCESS,
 			accountService.getAccountDetails(
 				currentUser.getId(),

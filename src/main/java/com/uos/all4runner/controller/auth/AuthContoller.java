@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.uos.all4runner.common.api.ApiResult;
+import com.uos.all4runner.common.response.ApiResultResponse;
 import com.uos.all4runner.constant.SuccessCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
@@ -28,10 +28,10 @@ public class AuthContoller implements AuthSwaggerSupoorter {
 
 	@Override
 	@GetMapping("/duplicate-email/{email}")
-	public ResponseEntity<ApiResult<Boolean>> isDuplicateEmail(
+	public ResponseEntity<ApiResultResponse<Boolean>> isDuplicateEmail(
 			@PathVariable String email
 	) {
-		return ApiResult.data(
+		return ApiResultResponse.data(
 			SuccessCode.REQUEST_SUCCESS,
 			authService.checkDuplicateEmail(email)
 		);
@@ -39,11 +39,11 @@ public class AuthContoller implements AuthSwaggerSupoorter {
 
 	@Override
 	@PostMapping("/login")
-	public ResponseEntity<ApiResult<AccountResponse.Login>> logIn(
+	public ResponseEntity<ApiResultResponse<AccountResponse.Login>> logIn(
 		@RequestBody @Valid AccountRequest.Login login
 	) {
 		Pair<String,String> pairToken = authService.LoginAccount(login);
-		return ApiResult.data(
+		return ApiResultResponse.data(
 			SuccessCode.LOGIN_SUCCESS,
 			new AccountResponse.Login(
 				pairToken.getFirst(),

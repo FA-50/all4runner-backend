@@ -1,4 +1,4 @@
-package com.uos.all4runner.common.page;
+package com.uos.all4runner.common.request;
 
 import org.springframework.data.domain.Pageable;
 

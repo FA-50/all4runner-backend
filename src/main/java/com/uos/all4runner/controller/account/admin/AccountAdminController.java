@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uos.all4runner.common.api.ApiResult;
-import com.uos.all4runner.common.page.Paging;
+import com.uos.all4runner.common.response.ApiResultResponse;
+import com.uos.all4runner.common.request.Paging;
 import com.uos.all4runner.constant.SuccessCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.dto.response.AccountResponse;
@@ -35,19 +35,19 @@ public class AccountAdminController implements AccountAdminSwaggerSupporter{
 
 	@Override
 	@PostMapping
-	public ResponseEntity<ApiResult<Void>> createAdmin(
+	public ResponseEntity<ApiResultResponse<Void>> createAdmin(
 		@RequestBody @Valid AccountRequest.Create request
 	) {
 		accountService.createAdmin(request);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_CREATE_SUCCESS
 		);
 	}
 
 	@Override
 	@DeleteMapping("/{accountId}")
-	public ResponseEntity<ApiResult<Void>> deleteAccount(
+	public ResponseEntity<ApiResultResponse<Void>> deleteAccount(
 		@AuthenticationPrincipal DefaultCurrentUser currentUser,
 		@PathVariable UUID accountId
 	) {
@@ -56,38 +56,38 @@ public class AccountAdminController implements AccountAdminSwaggerSupporter{
 			accountId
 		);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_DELETE_SUCCESS
 		);
 	}
 
 	@Override
 	@DeleteMapping("/{accountId}/hard-delete")
-	public ResponseEntity<ApiResult<Void>> deleteAccountPermanently(
+	public ResponseEntity<ApiResultResponse<Void>> deleteAccountPermanently(
 		@PathVariable	UUID accountId
 	) {
 		accountService.deleteAccountPermanently(accountId);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_DELETE_SUCCESS
 		);
 	}
 
 	@Override
 	@PatchMapping("/{accountId}/activate")
-	public ResponseEntity<ApiResult<Void>> restoreAccount(
+	public ResponseEntity<ApiResultResponse<Void>> restoreAccount(
 		@PathVariable	UUID accountId
 	) {
 		accountService.restoreAccount(accountId);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_RESTORE_SUCCESS
 		);
 	}
 
 	@Override
 	@PatchMapping("/{accountId}/password")
-	public ResponseEntity<ApiResult<Void>> updatePassword(
+	public ResponseEntity<ApiResultResponse<Void>> updatePassword(
 		@PathVariable	UUID accountId,
 		@RequestBody @Valid AccountRequest.UpdatePasswordAdmin request
 	) {
@@ -96,18 +96,18 @@ public class AccountAdminController implements AccountAdminSwaggerSupporter{
 			request.newPassword()
 		);
 
-		return ApiResult.empty(
+		return ApiResultResponse.empty(
 			SuccessCode.ACCOUNT_PASSWORD_UPDATE_SUCCESS
 		);
 	}
 
 	@Override
 	@GetMapping("/{accountId}")
-	public ResponseEntity<ApiResult<AccountResponse.Details>> getAccountDetails(
+	public ResponseEntity<ApiResultResponse<AccountResponse.Details>> getAccountDetails(
 		@AuthenticationPrincipal DefaultCurrentUser currentUser,
 		@PathVariable UUID accountId
 	) {
-		return ApiResult.data(
+		return ApiResultResponse.data(
 			SuccessCode.ACCOUNT_DATA_RESPONSE_SUCCESS,
 			accountService.getAccountDetails(
 				currentUser.getId(),
@@ -118,11 +118,11 @@ public class AccountAdminController implements AccountAdminSwaggerSupporter{
 
 	@Override
 	@GetMapping
-	public ResponseEntity<ApiResult<Page<AccountResponse.Search>>> getAccountSearches(
+	public ResponseEntity<ApiResultResponse<Page<AccountResponse.Search>>> getAccountSearches(
 		@RequestParam(required = false) String name,
 		@ModelAttribute @Valid Paging paging
 	) {
-		return ApiResult.page(
+		return ApiResultResponse.page(
 			SuccessCode.ACCOUNT_DATA_RESPONSE_SUCCESS,
 			accountService.searchAccounts(
 				name,

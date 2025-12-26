@@ -37,6 +37,7 @@ public class Account extends BaseEntity {
 	private String password;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
 	@Column(nullable = false)
