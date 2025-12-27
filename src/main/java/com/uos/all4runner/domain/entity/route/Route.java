@@ -30,8 +30,13 @@ public class Route extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private RouteStatus routeStatus;
 
-	@Column(nullable = false)
 	private String description;
+
+	@Column(nullable = false)
+	private Double estimatedKcal;
+
+	@Column(nullable = false)
+	private Double estimatedTime;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "accountId")
