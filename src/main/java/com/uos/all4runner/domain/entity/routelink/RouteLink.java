@@ -40,9 +40,6 @@ public class RouteLink {
 	private double linkCost;
 
 	@Column(nullable = false)
-	private double linkKcal;
-
-	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private LinkType linkType;
 
