@@ -3,6 +3,7 @@ package com.uos.all4runner.service.auth;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.ErrorCode;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AuthServiceImpl implements AuthService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;

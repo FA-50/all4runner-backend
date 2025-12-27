@@ -1,11 +1,9 @@
 package com.uos.all4runner.domain.entity.network;
 
 
-import com.uos.all4runner.domain.entity.common.ToiletDrinkVO;
 import com.uos.all4runner.constant.LinkType;
 import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "network")
+@Table(name = "linknetwork")
 public class Network {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -32,6 +30,9 @@ public class Network {
 	@Column(nullable = false)
 	private long tnode;
 
+	@Column(nullable = false, columnDefinition = "text")
+	private String geom;
+
 	@Column(nullable = false)
 	private double linkLength;
 
@@ -39,14 +40,14 @@ public class Network {
 	private double linkSlope;
 
 	@Column(nullable = false)
-	private double tobler;
+	private double linkCost;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private LinkType linkType;
 
-	@Embedded
-	private ToiletDrinkVO toiletDrinkVO;
+	@Column(nullable = false)
+	private String drinkToilet;
 
 	@OneToMany(mappedBy = "network")
 	List<AccountNetwork> accountNetworks = new ArrayList<AccountNetwork>();
