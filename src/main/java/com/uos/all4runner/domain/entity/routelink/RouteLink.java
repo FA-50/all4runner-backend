@@ -27,7 +27,7 @@ public class RouteLink {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected UUID id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "text")
 	private String geojson;
 
 	@Column(nullable = false)

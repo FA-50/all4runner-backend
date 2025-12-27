@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "network")
+@Table(name = "linknetwork")
 public class Network {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -29,6 +29,9 @@ public class Network {
 
 	@Column(nullable = false)
 	private long tnode;
+
+	@Column(nullable = false, columnDefinition = "text")
+	private String geojson;
 
 	@Column(nullable = false)
 	private double linkLength;
