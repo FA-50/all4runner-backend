@@ -45,3 +45,7 @@ ALTER TABLE nodenetwork ALTER COLUMN geom
 
 update nodenetwork
 set geom = ST_SetSRID(geom,5174);
+
+
+-- PostgreSQL 확장
+CREATE EXTENSION IF NOT EXISTS pgrouting;

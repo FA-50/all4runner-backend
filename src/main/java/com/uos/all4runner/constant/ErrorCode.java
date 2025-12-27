@@ -20,6 +20,8 @@ public enum ErrorCode {
 	CANNOT_MODIFY_SUPERADMIN(HttpStatus.BAD_REQUEST, "슈퍼 관리자 계정을 수정/삭제할 수 없습니다."),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다. 관리자에게 문의하세요."),
 
+	NODE_NOT_INCLUDE(HttpStatus.BAD_REQUEST, "경로 검색 시 활용할 노드가 포함되어있지 않습니다."),
+
 	NODE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 위치에서 근접한 노드를 찾을 수 없습니다."),
 	BUFFER_NOT_CREATED(HttpStatus.BAD_REQUEST, "설정된 거리에 해당하는 노드를 찾지 못해 버퍼를 생성할 수 없습니다.");
 	private final HttpStatus status;
