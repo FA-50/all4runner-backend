@@ -158,6 +158,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	@PreAuthorize("#currentId == authentication.principal.id")
 	public AccountResponse.Details getAccountDetails(UUID currentId, UUID subjectId) {
 			checkReadPermission(currentId, subjectId);
@@ -175,6 +176,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
 	public Page<AccountResponse.Search> searchAccounts(String name, Pageable pageable) {
 		return accountRepository.searchAccounts(name, pageable);

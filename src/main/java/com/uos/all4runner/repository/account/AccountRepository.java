@@ -14,7 +14,7 @@ import com.uos.all4runner.exception.CustomException;
 public interface AccountRepository extends JpaRepository<Account,UUID>, AccountRepositoryCustom {
 	default Account findByIdOrThrow(UUID accountId){
 		return findById(accountId).orElseThrow(
-			() -> new CustomException(ErrorCode.NO_ACCOUNT)
+			() -> new CustomException(ErrorCode.ACCOUNT_NOT_FOUND)
 		);
 	}
 
@@ -24,7 +24,7 @@ public interface AccountRepository extends JpaRepository<Account,UUID>, AccountR
 
 	default Account findByEmailOrThrow(String email){
 		return findByEmail(email).orElseThrow(
-			() -> new CustomException(ErrorCode.NO_ACCOUNT)
+			() -> new CustomException(ErrorCode.ACCOUNT_NOT_FOUND)
 		);
 	}
 

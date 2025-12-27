@@ -31,7 +31,7 @@ public class Network {
 	private long tnode;
 
 	@Column(nullable = false, columnDefinition = "text")
-	private String geojson;
+	private String geom;
 
 	@Column(nullable = false)
 	private double linkLength;

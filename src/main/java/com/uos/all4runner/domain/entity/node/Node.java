@@ -15,5 +15,5 @@ public class Node {
 	protected long id;
 
 	@Column(nullable = false, columnDefinition = "text")
-	private String geojson;
+	private String geom;
 }
