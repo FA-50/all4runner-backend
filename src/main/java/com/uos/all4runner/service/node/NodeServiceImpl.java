@@ -19,7 +19,6 @@ public class NodeServiceImpl implements NodeService {
 	private final NodeRepository nodeRepository;
 
 	@Override
-	@PreAuthorize("hasRole({'MEMBER', 'ADMIN', 'SUPERADMIN'})")
 	public NodeResponse.Node getClosestNode(NodeRequest.Node request) {
 		Node foundedNode = nodeRepository.findByCoordOrThrow(
 			request.longitude(),

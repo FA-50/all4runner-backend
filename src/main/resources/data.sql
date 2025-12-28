@@ -13,7 +13,7 @@ values(
 'Hwigyeong', 'Dondaemun', 'MALE',
 15, 80, '2025-12-25 18:16:33.329914+09',
 '2025-12-25 18:16:33.329914+09'
-      );
+);
 
 
 
@@ -44,4 +44,9 @@ ALTER TABLE nodenetwork ALTER COLUMN geom
     USING ST_GeomFromEWKB(decode(geom, 'hex'));
 
 update nodenetwork
-set geom = ST_SetSRID(geom,5174);
+set geom = ST_SetSRID(geom,4326);
+
+
+-- PostgreSQL 확장
+CREATE EXTENSION IF NOT EXISTS pgrouting;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

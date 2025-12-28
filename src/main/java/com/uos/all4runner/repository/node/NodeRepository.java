@@ -37,8 +37,8 @@ public interface NodeRepository extends JpaRepository<Node,Long> {
 			 	WITH cte_buffer as (
                 SELECT ST_transform(
 		                ST_Difference(
-											ST_Buffer(ST_transform(ST_SetSRID(ST_MakePoint(:longitude,:latitude), 4326),5174), :inner_distance),  
-											ST_Buffer(ST_transform(ST_SetSRID(ST_MakePoint(:longitude,:latitude), 4326),5174), :outer_distance)   
+											ST_Buffer(ST_transform(ST_SetSRID(ST_MakePoint(:longitude,:latitude), 4326),5174), :outer_distance),  
+											ST_Buffer(ST_transform(ST_SetSRID(ST_MakePoint(:longitude,:latitude), 4326),5174), :inner_distance)   
                 ),4326) AS geom)
 				SELECT n.*
 						FROM nodenetwork n
@@ -48,7 +48,7 @@ public interface NodeRepository extends JpaRepository<Node,Long> {
 	List<Node> findByDistance(
 		@Param("longitude") Double longitude,
 		@Param("latitude") Double latitude,
-		@Param("inner_distance") Double innerDistance,
-		@Param("outer_distance") Double outerDistance
+		@Param("outer_distance") Long outerDistance,
+		@Param("inner_distance") Long innerDistance
 	);
 }

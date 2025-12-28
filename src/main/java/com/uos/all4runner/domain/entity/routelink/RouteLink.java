@@ -16,11 +16,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "routelink")
 public class RouteLink {
-
 	@Id
 	@UuidGenerator
 	@Column(name = "id", nullable = false, updatable = false)
@@ -38,9 +39,6 @@ public class RouteLink {
 
 	@Column(nullable = false)
 	private double linkCost;
-
-	@Column(nullable = false)
-	private double linkKcal;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)

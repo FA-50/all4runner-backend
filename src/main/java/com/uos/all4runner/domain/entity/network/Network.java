@@ -2,7 +2,6 @@ package com.uos.all4runner.domain.entity.network;
 
 
 import com.uos.all4runner.constant.LinkType;
-import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,11 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "linknetwork")
@@ -48,7 +44,4 @@ public class Network {
 
 	@Column(nullable = false)
 	private String drinkToilet;
-
-	@OneToMany(mappedBy = "network")
-	List<AccountNetwork> accountNetworks = new ArrayList<AccountNetwork>();
 }

@@ -6,7 +6,6 @@ import com.uos.all4runner.domain.entity.common.BaseEntity;
 import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.AccountStatus;
 import com.uos.all4runner.constant.Gender;
-import com.uos.all4runner.domain.entity.accountnetwork.AccountNetwork;
 import com.uos.all4runner.domain.entity.review.Review;
 import com.uos.all4runner.domain.entity.route.Route;
 
@@ -16,9 +15,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.List;
@@ -60,13 +57,6 @@ public class Account extends BaseEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private AccountStatus status;
-
-	@OneToOne(
-		mappedBy = "account",
-		cascade = CascadeType.ALL,
-		orphanRemoval = true
-	)
-	private AccountNetwork accountNetwork;
 
 	@OneToMany(
 		mappedBy = "account",
@@ -177,5 +167,13 @@ public class Account extends BaseEntity {
 
 	public void updatePassword(String password){
 		this.password = password;
+	}
+
+	public <T> void mapToAccount(T data){
+		if ( data instanceof Route route){
+			routes.add(route);
+		} else {
+			reviews.add((Review)data);
+		}
 	}
 }
