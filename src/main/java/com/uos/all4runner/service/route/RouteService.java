@@ -9,7 +9,7 @@ import com.uos.all4runner.domain.dto.request.RouteRequest;
 public interface RouteService {
 
 	@PreAuthorize("#accountId == authentication.principal.id")
-	void createTemporaryShortestRoute(
+	void createShortestRoute(
 		RouteRequest.ShortPath request,
 		UUID accountId,
 		String categoryName

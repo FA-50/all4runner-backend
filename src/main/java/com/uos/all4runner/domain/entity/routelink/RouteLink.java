@@ -22,7 +22,6 @@ import lombok.Getter;
 @Entity
 @Table(name = "routelink")
 public class RouteLink {
-
 	@Id
 	@UuidGenerator
 	@Column(name = "id", nullable = false, updatable = false)

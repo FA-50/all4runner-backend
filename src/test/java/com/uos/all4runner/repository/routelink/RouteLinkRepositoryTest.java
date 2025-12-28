@@ -44,7 +44,7 @@ class RouteLinkRepositoryTest {
 				cast(id as bigint) as id,
 				cast(fnode as bigint) as source,
 				cast(tnode as bigint) as target,
-				link_cost as cost
+				link_length as cost
 				from linknetwork
 		""";
 
@@ -64,7 +64,7 @@ class RouteLinkRepositoryTest {
 	void 최적경로_생성__성공(){
 		// when
 		routeLinkRepository
-			.createShortestPaths(
+			.createPaths(
 				NODE_SET,
 				5000,
 				dijkstraSql,

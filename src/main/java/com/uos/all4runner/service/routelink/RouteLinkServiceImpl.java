@@ -33,7 +33,7 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 	@Override
 	public void createShortestPaths(
 		String nodeIdSet,
-		int distance,
+		int maxDistance,
 		LinkType excludeType,
 		UUID routeId
 	) {
@@ -48,9 +48,9 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 
 		String cost = getShortestCost(excludeType);
 
-		routeLinkRepository.createShortestPaths(
+		routeLinkRepository.createPaths(
 			nodeIds,
-			distance,
+			maxDistance,
 			DIJKSTRA_SQL.formatted(cost),
 			routeId
 		);
@@ -59,18 +59,40 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 	@Override
 	public void createOptimalPaths(
 		String nodeIdSet,
-		int distance,
+		int maxDistance,
 		int slopeConstraints,
 		LinkType excludeType,
 		UUID routeId
 	) {
+		Long[] nodeIds = Arrays.stream(nodeIdSet.split(","))
+			.map(Long::parseLong)
+			.toArray(Long[]::new);
+
+		PreConditions.validate(
+			nodeIds.length > 1,
+			ErrorCode.NODE_NOT_INCLUDE
+		);
+
+		String cost = getOptimalCost(excludeType,slopeConstraints);
+
+		routeLinkRepository.createPaths(
+			nodeIds,
+			maxDistance,
+			DIJKSTRA_SQL.formatted(cost),
+			routeId
+		);
 	}
 
 	public String getShortestCost(LinkType excludeType){
-		String cost = (excludeType.equals(LinkType.FOOTPATH))?
-			"link_cost as cost" :
-			"(CASE when link_type = '%s' then 999999 else link_cost END) as cost".formatted(excludeType.name());
+		return (excludeType.equals(LinkType.FOOTPATH))?
+			"link_length as cost" :
+			"(CASE when link_type = '%s' then 999999 else link_length END) as cost".formatted(excludeType.name());
+	}
 
-		return cost;
-	};
+	public String getOptimalCost(LinkType excludeType, int slopeConstraints){
+		return (excludeType.equals(LinkType.FOOTPATH))?
+			"link_cost as cost" :
+			"(CASE when slope > %d then 999999 when link_type = '%s' then 999999 else link_length END) as cost"
+				.formatted(slopeConstraints,excludeType.name());
+	}
 }

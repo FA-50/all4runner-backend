@@ -29,7 +29,7 @@ public class RouteServiceImpl implements RouteService {
 
 
 	@Override
-	public void createTemporaryShortestRoute(
+	public void createShortestRoute(
 		RouteRequest.ShortPath request,
 		UUID accountId,
 		String categoryName

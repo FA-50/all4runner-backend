@@ -39,14 +39,14 @@ public interface RouteLinkRepository extends JpaRepository<RouteLink, UUID> {
 					:dijkstra_sql,
 					:node_ids ::bigint[]
 			)
-			where agg_cost < :distance
+			where agg_cost < :max_distance
   	) as y
 		on x.id = y.edge
 		order by y.seq
 		""", nativeQuery = true)
-	void createShortestPaths(
+	void createPaths(
 		@Param("node_ids") Long[] nodeIds,
-		@Param("distance") int distance,
+		@Param("max_distance") int maxDistance,
 		@Param("dijkstra_sql") String dijkstra_sql,
 		@Param("route_id") UUID routeId
 	);
