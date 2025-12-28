@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uos.all4runner.domain.entity.route.Route;
 import com.uos.all4runner.domain.entity.routelink.RouteLink;
@@ -22,6 +23,7 @@ import com.uos.all4runner.util.RouteCreation;
 import java.util.List;
 
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 class RouteLinkRepositoryTest {
 	@Autowired
@@ -56,13 +58,6 @@ class RouteLinkRepositoryTest {
 		);
 
 		routeRepository.save(route);
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-		routeLinkRepository.deleteAll();
-		accountRepository.deleteAll();
-		categoryRepository.deleteAll();
 	}
 
 	@Test

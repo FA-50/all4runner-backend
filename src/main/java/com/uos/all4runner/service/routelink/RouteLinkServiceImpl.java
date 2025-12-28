@@ -19,6 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RouteLinkServiceImpl implements RouteLinkService {
 
+	private static String DIJKSTRA_SQL = """
+			select
+				cast(id as bigint) as id,
+				cast(fnode as bigint) as source,
+				cast(tnode as bigint) as target,
+				%s
+				from linknetwork
+			""";
+
 	private final RouteLinkRepository routeLinkRepository;
 
 	@Override
@@ -28,7 +37,6 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 		LinkType excludeType,
 		UUID routeId
 	) {
-
 		Long[] nodeIds = Arrays.stream(nodeIdSet.split(","))
 			.map(Long::parseLong)
 			.toArray(Long[]::new);
@@ -38,9 +46,14 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 			ErrorCode.NODE_NOT_INCLUDE
 		);
 
-		String dijkstra_sql = createDijkstraSql(excludeType);
+		String cost = getShortestCost(excludeType);
 
-		routeLinkRepository.createShortestPaths(nodeIds, distance, dijkstra_sql, routeId);
+		routeLinkRepository.createShortestPaths(
+			nodeIds,
+			distance,
+			DIJKSTRA_SQL.formatted(cost),
+			routeId
+		);
 	}
 
 	@Override
@@ -53,18 +66,11 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 	) {
 	}
 
-	public String createDijkstraSql(LinkType excludeType){
+	public String getShortestCost(LinkType excludeType){
 		String cost = (excludeType.equals(LinkType.FOOTPATH))?
 			"link_cost as cost" :
 			"(CASE when link_type = '%s' then 999999 else link_cost END) as cost".formatted(excludeType.name());
 
-		return """
-			select
-				cast(id as bigint) as id,
-				cast(fnode as bigint) as source,
-				cast(tnode as bigint) as target,
-				%s
-				from linknetwork
-			""".formatted(cost);
+		return cost;
 	};
 }

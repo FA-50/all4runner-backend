@@ -44,7 +44,7 @@ ALTER TABLE nodenetwork ALTER COLUMN geom
     USING ST_GeomFromEWKB(decode(geom, 'hex'));
 
 update nodenetwork
-set geom = ST_SetSRID(geom,5174);
+set geom = ST_SetSRID(geom,4326);
 
 
 -- PostgreSQL 확장
