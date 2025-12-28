@@ -168,4 +168,12 @@ public class Account extends BaseEntity {
 	public void updatePassword(String password){
 		this.password = password;
 	}
+
+	public <T> void mapToAccount(T data){
+		if ( data instanceof Route route){
+			routes.add(route);
+		} else {
+			reviews.add((Review)data);
+		}
+	}
 }

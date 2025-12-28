@@ -1,15 +1,10 @@
 package com.uos.all4runner.util;
 
-import java.util.UUID;
-
 import org.springframework.data.util.Pair;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 
-import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.Gender;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
 import com.uos.all4runner.domain.entity.account.Account;
-import com.uos.all4runner.security.DefaultCurrentUser;
 
 public class AccountCreation {
 

@@ -9,14 +9,14 @@ public interface RouteRequest {
 	@Schema(name = "RouteRequest.ShortPath")
 	record ShortPath(
 		@NotBlank String nodeIdSet,
-		@NotBlank int distance,
+		@NotBlank int maxDistance,
 		@NotBlank LinkType excludeType
 		){
 	}
 	@Schema(name = "RouteRequest.OptimalPath")
 	record OptimalPath(
 		@NotBlank String nodeIdSet,
-		@NotBlank int distance,
+		@NotBlank int maxDistance,
 		@NotBlank int slopeConstraints,
 		@NotBlank LinkType excludeType
 	){

@@ -49,3 +49,4 @@ set geom = ST_SetSRID(geom,5174);
 
 -- PostgreSQL 확장
 CREATE EXTENSION IF NOT EXISTS pgrouting;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
