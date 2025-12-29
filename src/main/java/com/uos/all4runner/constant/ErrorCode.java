@@ -16,11 +16,14 @@ public enum ErrorCode {
 	NOT_REMOVED(HttpStatus.BAD_REQUEST, "삭제된 계정이 아닙니다"),
 	INVALID_PASSWORD(HttpStatus.BAD_REQUEST,"기존 비밀번호와 동일한 비밀번호가 아닙니다."),
 	SAME_PASSWORD(HttpStatus.BAD_REQUEST, "기존 비밀번호와 동일한 비밀번호입니다"),
-	ACCOUNT_ACCESS_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "계정에 권한이 없습니다."),
+	ACCESS_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "계정에 권한이 없습니다."),
 	CANNOT_MODIFY_SUPERADMIN(HttpStatus.BAD_REQUEST, "슈퍼 관리자 계정을 수정/삭제할 수 없습니다."),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다. 관리자에게 문의하세요."),
 
 	CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 카테고리가 존재하지 않습니다."),
+
+	ROUTE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 경로가 존재하지 않습니다."),
+	ROUTE_STATUS_NOT_TEMP(HttpStatus.BAD_REQUEST, "해당 경로가 임시경로 상태가 아닙니다."),
 
 	NODE_NOT_INCLUDE(HttpStatus.BAD_REQUEST, "경로 검색 시 활용할 노드가 포함되어있지 않습니다."),
 

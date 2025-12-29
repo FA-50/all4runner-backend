@@ -8,13 +8,22 @@ insert into account(
     updated_at
 )
 values(
-'1cd40046-6dcf-4172-99eb-2b6f7377bc80','wjdtn747@naver.com', '이정수',
+'1cd40046-6dcf-4172-99eb-2b6f7377bc80','wjdtn747@naver.com', 'root',
 '$2a$10$m/BzNm4PYtv7MrxuSzNg5.DYxPIpOCSB4LSh4JbrdA4HRDmgwJdwi','SUPERADMIN', 'ACTIVATED',
 'Hwigyeong', 'Dondaemun', 'MALE',
 15, 80, '2025-12-25 18:16:33.329914+09',
 '2025-12-25 18:16:33.329914+09'
 );
 
+-- 초기 카테고리 데이터 생성
+insert into category(id, name, parent_id, created_at, updated_at)
+values(
+       '1cd40046-6dcf-4172-99eb-2b6f7377bc80',
+       '카테고리없음',
+       null,
+       '2025-12-25 18:16:33.329914+09',
+       '2025-12-25 18:16:33.329914+09'
+      );
 
 
 -- 초기 링크데이터 구성
