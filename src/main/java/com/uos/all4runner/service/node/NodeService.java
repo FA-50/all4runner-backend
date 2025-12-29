@@ -6,6 +6,6 @@ import com.uos.all4runner.domain.dto.request.NodeRequest;
 import com.uos.all4runner.domain.dto.response.NodeResponse;
 
 public interface NodeService {
-	@PreAuthorize("hasRole({'MEMBER', 'ADMIN', 'SUPERADMIN'})")
+	@PreAuthorize("hasAnyRole('MEMBER', 'ADMIN', 'SUPERADMIN')")
 	NodeResponse.Node  getClosestNode(NodeRequest.Node request);
 }

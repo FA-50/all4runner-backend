@@ -10,8 +10,20 @@ public interface RouteService {
 
 	@PreAuthorize("#accountId == authentication.principal.id")
 	void createShortestRoute(
-		RouteRequest.ShortPath request,
+		RouteRequest.ShortRoute request,
+		UUID accountId
+	);
+
+	@PreAuthorize("#accountId == authentication.principal.id")
+	void createOptimalRoute(
+		RouteRequest.OptimalRoute request,
+		UUID accountId
+	);
+
+	@PreAuthorize("#accountId == authentication.principal.id")
+	void updateTempRoute(
+		RouteRequest.TempToPublic request,
 		UUID accountId,
-		String categoryName
+		UUID routeId
 	);
 }

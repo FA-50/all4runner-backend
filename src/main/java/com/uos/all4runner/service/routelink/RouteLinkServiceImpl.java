@@ -3,6 +3,7 @@ package com.uos.all4runner.service.routelink;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,8 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 		LinkType excludeType,
 		UUID routeId
 	) {
-		Long[] nodeIds = Arrays.stream(nodeIdSet.split(","))
+		Long[] nodeIds = Arrays
+			.stream(nodeIdSet.split(","))
 			.map(Long::parseLong)
 			.toArray(Long[]::new);
 
@@ -92,7 +94,7 @@ public class RouteLinkServiceImpl implements RouteLinkService {
 	public String getOptimalCost(LinkType excludeType, int slopeConstraints){
 		return (excludeType.equals(LinkType.FOOTPATH))?
 			"link_cost as cost" :
-			"(CASE when slope > %d then 999999 when link_type = '%s' then 999999 else link_length END) as cost"
+			"(CASE when link_slope > %d then 999999 when link_type = '%s' then 999999 else link_length END) as cost"
 				.formatted(slopeConstraints,excludeType.name());
 	}
 }

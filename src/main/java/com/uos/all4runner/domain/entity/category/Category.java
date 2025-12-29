@@ -19,6 +19,9 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "category")
 public class Category extends BaseEntity {
+	
+	public static final String UNASSIGNED = "카테고리없음";
+	
 	@Column(nullable = false)
 	private String name;
 
@@ -27,7 +30,7 @@ public class Category extends BaseEntity {
 		cascade = CascadeType.ALL,
 		orphanRemoval = true
 	)
-	private List<Category> category = new ArrayList<Category>();
+	private List<Category> categorys = new ArrayList<Category>();
 
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
@@ -45,7 +48,7 @@ public class Category extends BaseEntity {
 		this.parentCategory = parentCategory;
 	}
 
-	public static Category createParentCategory(String name){
+	public static Category createCategory(String name){
 		return new Category(name);
 	}
 
@@ -53,10 +56,16 @@ public class Category extends BaseEntity {
 		String name,
 		Category parentCategory
 	){
-		return new Category(name, parentCategory);
+		Category category = new Category(name, parentCategory);
+		category.parentCategory.mapChildCategory(category);
+		return category;
 	}
 
 	public void mapToCategory(Route route){
 		routes.add(route);
+	}
+
+	public void mapChildCategory(Category childCategory) {
+		this.categorys.add(childCategory);
 	}
 }

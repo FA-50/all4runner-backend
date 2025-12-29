@@ -28,8 +28,6 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "route")
 public class Route extends BaseEntity {
-	@Column(nullable = false)
-	private String name;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -69,11 +67,9 @@ public class Route extends BaseEntity {
 		Account account,
 		Category category
 	){
-		this.name = "";
-		this.description = "";
 		this.routeStatus = RouteStatus.TEMP;
-		estimatedKcal = 0.0;
-		estimatedRunningTime = 0.0;
+		this.estimatedKcal = 0.0;
+		this.estimatedRunningTime = 0.0;
 		this.account = account;
 		this.category = category;
 	}
@@ -89,6 +85,19 @@ public class Route extends BaseEntity {
 		account.mapToAccount(route);
 		category.mapToCategory(route);
 		return route;
+	}
+
+	public void updateTemporaryRoute(
+		String description,
+		Double estimatedKcal,
+		Double estimatedRunningTime,
+		Category category
+	){
+		this.description = description;
+		this.routeStatus = RouteStatus.PUBLIC;
+		this.estimatedKcal = estimatedKcal;
+		this.estimatedRunningTime = estimatedRunningTime;
+		this.category = category;
 	}
 
 	public <T> void mapToRoute(T data){

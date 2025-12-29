@@ -8,39 +8,18 @@ import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.security.DefaultCurrentUser;
 
 public class AuthenticationCreation {
-	public static TestingAuthenticationToken createTestAuthentication_MEMBER(){
+	public static TestingAuthenticationToken createTestAuthentication(
+		UUID accountId,
+		AccountRole accountRole
+	) {
 		return new TestingAuthenticationToken(
 			new DefaultCurrentUser(
-				UUID.randomUUID(),
+				accountId,
 				"admin@naver.com",
-				null
+				accountRole
 			),
 			null,
-			"ROLE_MEMBER"
-		);
-	}
-
-	public static TestingAuthenticationToken createTestAuthentication_ADMIN(){
-		return new TestingAuthenticationToken(
-			new DefaultCurrentUser(
-				UUID.randomUUID(),
-				"admin@naver.com",
-				null
-			),
-			null,
-			"ROLE_ADMIN"
-		);
-	}
-
-	public static TestingAuthenticationToken createTestAuthentication_SUPERADMIN(){
-		return new TestingAuthenticationToken(
-			new DefaultCurrentUser(
-				UUID.randomUUID(),
-				"admin@naver.com",
-				null
-			),
-			null,
-			"ROLE_SUPERADMIN"
+			"ROLE_" + accountRole.name()
 		);
 	}
 }
