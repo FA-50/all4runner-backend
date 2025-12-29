@@ -19,10 +19,10 @@ public interface AccountService {
 	@PreAuthorize("#currentId == authentication.principal.id")
 	void deleteAccount(UUID currentId, UUID subjectId);
 
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	@PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
 	void deleteAccountPermanently(UUID subjectId);
 
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	@PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
 	void restoreAccount(UUID subjectId);
 
 	@PreAuthorize("#currentId == authentication.principal.id")
@@ -31,12 +31,12 @@ public interface AccountService {
 	@PreAuthorize("#currentId == authentication.principal.id")
 	void updatePassword(UUID currentId, AccountRequest.UpdatePassword request);
 
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	@PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
 	void updatePasswordByAdmin(UUID subjectId, String newPassword);
 
 	@PreAuthorize("#currentId == authentication.principal.id")
 	AccountResponse.Details getAccountDetails(UUID currentId, UUID subjectId);
 
-	@PreAuthorize("hasRole({'ADMIN', 'SUPERADMIN'})")
+	@PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
 	Page<AccountResponse.Search> searchAccounts(String name, Pageable pageable);
 }
