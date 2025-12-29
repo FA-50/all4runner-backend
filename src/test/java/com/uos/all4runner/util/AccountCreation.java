@@ -43,7 +43,7 @@ public class AccountCreation {
 		return new AccountRequest.Create(
 			"멤버테스터",
 			"member@naver.com",
-			PASSWORD.getSecond(),
+			PASSWORD.getFirst(),
 			Gender.MALE,
 			"동대문구",
 			"휘경동",

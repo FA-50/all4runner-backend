@@ -1,5 +1,8 @@
-package com.uos.all4runner.repository.routelink;
+package com.uos.all4runner.service.routelink;
 
+import static org.assertj.core.api.AssertionsForClassTypes.*;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,21 +12,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.uos.all4runner.constant.ErrorCode;
+import com.uos.all4runner.constant.LinkType;
 import com.uos.all4runner.domain.entity.route.Route;
 import com.uos.all4runner.domain.entity.routelink.RouteLink;
+import com.uos.all4runner.exception.CustomException;
 import com.uos.all4runner.repository.account.AccountRepository;
 import com.uos.all4runner.repository.category.CategoryRepository;
 import com.uos.all4runner.repository.route.RouteRepository;
+import com.uos.all4runner.repository.routelink.RouteLinkRepository;
 import com.uos.all4runner.util.AccountCreation;
 import com.uos.all4runner.util.CategoryCreation;
 import com.uos.all4runner.util.RouteCreation;
 
-import java.util.List;
-
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-class RouteLinkRepositoryTest {
+class RouteLinkServiceTest {
+
+	@Autowired
+	RouteLinkService routeLinkService;
 	@Autowired
 	RouteLinkRepository routeLinkRepository;
 	@Autowired
@@ -33,23 +41,12 @@ class RouteLinkRepositoryTest {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	static final Long[] NODE_SET = {
-		391472l, 341760l, 393566l, 398348l, 348740l
-	};
 
-	static final String dijkstraSql = """
-		select
-				cast(id as bigint) as id,
-				cast(fnode as bigint) as source,
-				cast(tnode as bigint) as target,
-				link_length as cost
-				from linknetwork
-		""";
-
+	static final String nodeIdSet = "391472,341760,393566,398348,348740";
 	Route route;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		route = RouteCreation.createTempRoute(
 			accountRepository.save(AccountCreation.createMember()),
 			categoryRepository.save(CategoryCreation.createCategory())
@@ -58,15 +55,49 @@ class RouteLinkRepositoryTest {
 	}
 
 	@Test
-	void 최적경로_생성__성공(){
+	void 최단거리경로_생성_성공(){
 		// when
-		routeLinkRepository
-			.createPaths(
-				NODE_SET,
+		routeLinkService.createShortestPaths(
+			nodeIdSet,
+			5000,
+			LinkType.CROSSWALK,
+			route.getId()
+		);
+
+		// then
+		List<RouteLink> routeLinks = routeLinkRepository.findAll();
+		Assertions.assertFalse(routeLinks.isEmpty());
+		Assertions.assertEquals(route.getId(), routeLinks.get(0).getRoute().getId());
+	}
+
+	@Test
+	void 최단거리경로_생성__실패_노드부족(){
+		// begin
+		String tempNodeIdSet = "391472,";
+
+		// when & then
+		assertThatThrownBy(
+			() -> routeLinkService.createShortestPaths(
+				tempNodeIdSet,
 				5000,
-				dijkstraSql,
+				LinkType.CROSSWALK,
 				route.getId()
-			);
+			)
+		)
+			.isInstanceOf(CustomException.class)
+			.hasMessageContaining(ErrorCode.NODE_NOT_INCLUDE.getMessage());
+	}
+
+	@Test
+	void 최적거리경로_생성_성공(){
+		// when
+		routeLinkService.createOptimalPaths(
+			nodeIdSet,
+			5000,
+			1,
+			LinkType.CROSSWALK,
+			route.getId()
+		);
 
 		// then
 		List<RouteLink> routeLinks = routeLinkRepository.findAll();

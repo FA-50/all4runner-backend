@@ -178,7 +178,7 @@ public class AccountServiceImpl implements AccountService {
 			Account currentAccount = accountRepository.findByIdOrThrow(currentId);
 			PreConditions.validate(
 				!currentAccount.getRole().equals(AccountRole.MEMBER),
-				ErrorCode.ACCOUNT_ACCESS_NOT_ALLOWED
+				ErrorCode.ACCESS_NOT_ALLOWED
 			);
 		}
 	}
@@ -189,7 +189,7 @@ public class AccountServiceImpl implements AccountService {
 			subjectAccount.getRole() == AccountRole.SUPERADMIN) {
 			PreConditions.validate(
 				currentId.equals(subjectId),
-				ErrorCode.ACCOUNT_ACCESS_NOT_ALLOWED
+				ErrorCode.ACCESS_NOT_ALLOWED
 			);
 		} else {
 			Account currentAccount = accountRepository.findByIdOrThrow(currentId);
@@ -197,7 +197,7 @@ public class AccountServiceImpl implements AccountService {
 				currentAccount.getRole().equals(AccountRole.ADMIN) |
 					currentAccount.getRole().equals(AccountRole.SUPERADMIN) |
 					currentId.equals(subjectId),
-				ErrorCode.ACCOUNT_ACCESS_NOT_ALLOWED
+				ErrorCode.ACCESS_NOT_ALLOWED
 			);
 		}
 	}
