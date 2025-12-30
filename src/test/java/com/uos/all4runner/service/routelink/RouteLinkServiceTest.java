@@ -23,7 +23,6 @@ import com.uos.all4runner.repository.route.RouteRepository;
 import com.uos.all4runner.repository.routelink.RouteLinkRepository;
 import com.uos.all4runner.util.AccountCreation;
 import com.uos.all4runner.util.CategoryCreation;
-import com.uos.all4runner.util.RouteCreation;
 
 @SpringBootTest
 @Transactional
@@ -47,7 +46,7 @@ class RouteLinkServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		route = RouteCreation.createTempRoute(
+		route = Route.createTemporaryRoute(
 			accountRepository.save(AccountCreation.createMember()),
 			categoryRepository.save(CategoryCreation.createCategory())
 		);

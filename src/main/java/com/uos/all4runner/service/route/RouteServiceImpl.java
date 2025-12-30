@@ -2,6 +2,8 @@ package com.uos.all4runner.service.route;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.uos.all4runner.constant.AccountRole;
 import com.uos.all4runner.constant.ErrorCode;
 import com.uos.all4runner.constant.RouteStatus;
+import com.uos.all4runner.domain.dto.response.RouteResponse;
 import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.domain.entity.category.Category;
 import com.uos.all4runner.domain.entity.route.Route;
@@ -34,7 +37,7 @@ public class RouteServiceImpl implements RouteService {
 	private final RouteRepository routeRepository;
 
 	@Override
-	public void createShortestRoute(
+	public RouteResponse.CreateTemp createShortestRoute(
 		RouteRequest.ShortRoute request,
 		UUID accountId
 	) {
@@ -46,10 +49,12 @@ public class RouteServiceImpl implements RouteService {
 			request.excludeType(),
 			tempRoute.getId()
 		);
+
+		return new RouteResponse.CreateTemp(tempRoute.getId());
 	}
 
 	@Override
-	public void createOptimalRoute(
+	public RouteResponse.CreateTemp createOptimalRoute(
 		RouteRequest.OptimalRoute request,
 		UUID accountId
 	) {
@@ -62,6 +67,8 @@ public class RouteServiceImpl implements RouteService {
 			request.excludeType(),
 			tempRoute.getId()
 		);
+
+		return new RouteResponse.CreateTemp(tempRoute.getId());
 	}
 
 	@Override
@@ -70,38 +77,142 @@ public class RouteServiceImpl implements RouteService {
 		UUID accountId,
 		UUID routeId
 	){
+		try {
+			checkReadPermission(accountId, routeId);
+
+			Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+
+			PreConditions.validate(
+				foundedRoute.getRouteStatus().equals(RouteStatus.TEMP),
+				ErrorCode.ROUTE_STATUS_NOT_TEMP
+			);
+			Account account = accountRepository.findByIdOrThrow(accountId);
+
+			Pair<Double,Double> kcalAndTime = calculateKcalAndTime(
+				foundedRoute.getRouteLinks(),
+				account.getWeight(),
+				account.getAvgSpeed()
+			);
+
+			foundedRoute.updateTemporaryRoute(
+				request.description(),
+				kcalAndTime.getFirst(),
+				kcalAndTime.getSecond(),
+				categoryRepository.findByNameOrThrow(request.categoryName())
+			);
+
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+			routeRepository.deleteTempByAccountId(accountId);
+		}
+	}
+
+	@Override
+	public void deleteTempByAccountId(UUID accountId) {
+		routeRepository.deleteTempByAccountId(accountId);
+	}
+
+	@Override
+	public void updateRouteDescription(UUID accountId, UUID routeId, RouteRequest.UpdateDescription request) {
 		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		checkModifyPermission(accountId, foundedRoute.getAccount().getId());
 
-		checkReadPermission(accountId, foundedRoute.getAccount().getId());
+		foundedRoute.updatedDescription(request.description());
+	}
 
-		PreConditions.validate(
-			foundedRoute.getRouteStatus().equals(RouteStatus.TEMP),
-			ErrorCode.ROUTE_STATUS_NOT_TEMP
-		);
+	@Override
+	public void deleteRoute(UUID accountId, UUID routeId) {
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		checkModifyPermission(accountId, foundedRoute.getAccount().getId());
 
-		Account account = accountRepository.findByIdOrThrow(accountId);
+		routeRepository.deleteById(foundedRoute.getId());
+	}
 
-		Pair<Double,Double> kcalAndTime = calculateKcalAndTime(
+	@Override
+	public void switchRouteToPublic(UUID accountId, UUID routeId) {
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		checkModifyPermission(accountId, foundedRoute.getAccount().getId());
+
+		foundedRoute.setPublicStatus();
+	}
+
+	@Override
+	public void switchRouteToPrivate(UUID accountId, UUID routeId) {
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		checkModifyPermission(accountId, foundedRoute.getAccount().getId());
+
+		foundedRoute.setPrivateStatus();
+	}
+
+	@Override
+	public RouteResponse.Details getRouteDetails(UUID accountId, UUID routeId) {
+		checkReadPermission(accountId, routeId);
+
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		return new RouteResponse.Details(
+			foundedRoute.getId(),
+			foundedRoute.getRouteStatus(),
+			foundedRoute.getDescription(),
+			foundedRoute.getCategory().getName(),
+			foundedRoute.getAccount().getName(),
+			foundedRoute.getEstimatedKcal(),
+			foundedRoute.getEstimatedRunningTime(),
 			foundedRoute.getRouteLinks(),
-			account.getWeight(),
-			account.getAvgSpeed()
-		);
-
-		foundedRoute.updateTemporaryRoute(
-			request.description(),
-			kcalAndTime.getFirst(),
-			kcalAndTime.getSecond(),
-			categoryRepository.findByNameOrThrow(request.categoryName())
+			foundedRoute.getCreatedAt()
 		);
 	}
 
+	@Override
+	public 	Page<RouteResponse.Search> searchRoutes(
+		UUID accountId,
+		UUID subjectId,
+		Pageable pageable
+	) {
+		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
 
-
-	private void checkReadPermission(UUID accountId, UUID subjectId) {
-		if (!accountId.equals(subjectId)) {
-			Account currentAccount = accountRepository.findByIdOrThrow(accountId);
+		if (!accountId.equals(subjectAccount.getId())) {
 			PreConditions.validate(
-				!currentAccount.getRole().equals(AccountRole.MEMBER),
+				!subjectAccount.getRole().equals(AccountRole.MEMBER),
+				ErrorCode.ACCESS_NOT_ALLOWED
+			);
+		}
+
+		return routeRepository.searchRoutesByAccountId(subjectId, pageable);
+	}
+
+	@Override
+	public Page<RouteResponse.Search> searchPublicRoutes(String categoryName, Pageable pageable) {
+		return routeRepository.searchPublicRoutes(categoryName, pageable);
+	}
+
+	private void checkReadPermission(UUID accountId, UUID routeId) {
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+		if (foundedRoute.getRouteStatus().equals(RouteStatus.PRIVATE)
+			|| foundedRoute.getRouteStatus().equals(RouteStatus.TEMP) ){
+			if (!accountId.equals(foundedRoute.getAccount().getId())) {
+				Account currentAccount = accountRepository.findByIdOrThrow(accountId);
+				PreConditions.validate(
+					!currentAccount.getRole().equals(AccountRole.MEMBER),
+					ErrorCode.ACCESS_NOT_ALLOWED
+				);
+			}
+		}
+	}
+
+	private void checkModifyPermission(UUID currentId, UUID subjectId) {
+		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
+		if (subjectAccount.getRole() == AccountRole.ADMIN ||
+			subjectAccount.getRole() == AccountRole.SUPERADMIN) {
+			PreConditions.validate(
+				currentId.equals(subjectId),
+				ErrorCode.ACCESS_NOT_ALLOWED
+			);
+		} else {
+			Account currentAccount = accountRepository.findByIdOrThrow(currentId);
+			PreConditions.validate(
+				currentAccount.getRole().equals(AccountRole.ADMIN) |
+					currentAccount.getRole().equals(AccountRole.SUPERADMIN) |
+					currentId.equals(subjectId),
 				ErrorCode.ACCESS_NOT_ALLOWED
 			);
 		}
@@ -122,7 +233,7 @@ public class RouteServiceImpl implements RouteService {
 			double slope = routeLink.getLinkSlope();
 
 			if (slope > 0){
-				v0 = ( (3.5 + ( 0.2 * speed_m_min ) + ( 0.9 * speed_m_min * ( slope / 100d ) ) ) * weight ) /1000;
+				v0 = ( (3.5 + ( 0.2 * speed_m_min ) + ( 0.9 * speed_m_min * ( slope / 100d ) ) ) * weight ) / 1000;
 			} else {
 				v0 = ( ( 3.5 + ( 0.2 * speed_m_min ) ) * weight )/1000;
 			}

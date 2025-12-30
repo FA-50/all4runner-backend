@@ -16,7 +16,6 @@ import com.uos.all4runner.repository.category.CategoryRepository;
 import com.uos.all4runner.repository.route.RouteRepository;
 import com.uos.all4runner.util.AccountCreation;
 import com.uos.all4runner.util.CategoryCreation;
-import com.uos.all4runner.util.RouteCreation;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ class RouteLinkRepositoryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		route = RouteCreation.createTempRoute(
+		route = Route.createTemporaryRoute(
 			accountRepository.save(AccountCreation.createMember()),
 			categoryRepository.save(CategoryCreation.createCategory())
 		);
@@ -58,7 +57,7 @@ class RouteLinkRepositoryTest {
 	}
 
 	@Test
-	void 최적경로_생성__성공(){
+	void 경로_생성__성공(){
 		// when
 		routeLinkRepository
 			.createPaths(

@@ -33,4 +33,10 @@ public interface RouteRequest {
 		@NotBlank String categoryName
 		){
 	}
+
+	@Schema(name = "RouteRequest.UpdateDescription")
+	record UpdateDescription(
+		String description
+	){
+	}
 }

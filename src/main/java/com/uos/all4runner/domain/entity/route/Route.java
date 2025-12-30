@@ -42,11 +42,11 @@ public class Route extends BaseEntity {
 	private Double estimatedRunningTime;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "accountId")
+	@JoinColumn(name = "accountId", nullable = false)
 	private Account account;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "categoryId")
+	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
 
 	@OneToMany(
@@ -100,8 +100,14 @@ public class Route extends BaseEntity {
 		this.category = category;
 	}
 
+	public void updatedDescription(String description){ this.description = description; }
+
+	public void setPublicStatus(){ this.routeStatus = RouteStatus.PUBLIC; }
+
+	public void setPrivateStatus(){ this.routeStatus = RouteStatus.PRIVATE; }
+
 	public <T> void mapToRoute(T data){
-		if(data instanceof RouteLink routeData){
+		if (data instanceof RouteLink routeData){
 			routeLinks.add(routeData);
 		} else{
 			reviews.add((Review)data);

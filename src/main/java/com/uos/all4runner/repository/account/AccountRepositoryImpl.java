@@ -31,8 +31,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
 		String name,
 		Pageable pageable
 	) {
-		BooleanBuilder booleanBuilder = new BooleanBuilder()
-			.and(containsAccountName(name));
 
 		List<AccountResponse.Search> result = queryFactory
 			.select(new QAccountResponse_Search(
@@ -42,7 +40,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
 				qAccount.status
 			))
 			.from(qAccount)
-			.where(booleanBuilder)
+			.where(containsAccountName(name))
 			.orderBy(qAccount.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -51,7 +49,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
 		int total = queryFactory
 			.select(qAccount.id)
 			.from(qAccount)
-			.where(booleanBuilder)
+			.where(containsAccountName(name))
 			.fetch().size();
 
 		return new PageImpl<>(result,pageable,total);
