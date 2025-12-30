@@ -12,6 +12,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -48,6 +49,13 @@ public class RouteLink {
 	private String drinkToilet;
 
 	@ManyToOne
-	@JoinColumn(name = "route_id", nullable = false)
+	@JoinColumn(
+		name = "route_id",
+		nullable = false,
+		foreignKey = @ForeignKey(
+		name = "fk_routelink_route",
+		foreignKeyDefinition = "FOREIGN KEY(route_id) REFERENCES route(id) ON DELETE CASCADE"
+		)
+	)
 	private Route route;
 }

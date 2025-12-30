@@ -59,3 +59,8 @@ set geom = ST_SetSRID(geom,4326);
 -- PostgreSQL 확장
 CREATE EXTENSION IF NOT EXISTS pgrouting;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 제약관계 정의
+alter table routelink add constraint fk_route_ondelete
+foreign key(route_id) references route(id)
+on delete cascade;

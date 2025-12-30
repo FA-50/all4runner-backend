@@ -15,7 +15,7 @@ import com.uos.all4runner.domain.entity.routelink.RouteLink;
 @Repository
 public interface RouteLinkRepository extends JpaRepository<RouteLink, UUID> {
 
-	@Modifying
+	@Modifying(clearAutomatically = true)
 	@Transactional
 	@Query(value = """
 		insert into routelink(
@@ -50,4 +50,6 @@ public interface RouteLinkRepository extends JpaRepository<RouteLink, UUID> {
 		@Param("dijkstra_sql") String dijkstra_sql,
 		@Param("route_id") UUID routeId
 	);
+
+	List<RouteLink> findAllByRouteId(UUID routeId);
 }

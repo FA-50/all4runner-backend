@@ -11,6 +11,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -42,11 +43,18 @@ public class Route extends BaseEntity {
 	private Double estimatedRunningTime;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "accountId")
+	@JoinColumn(
+		name = "accountId",
+		nullable = false,
+		foreignKey = @ForeignKey(
+			name = "fk_route_account",
+			foreignKeyDefinition = "FOREIGN KEY(account_id) REFERENCES account(id) ON DELETE CASCADE"
+		)
+	)
 	private Account account;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "categoryId")
+	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
 
 	@OneToMany(
@@ -100,8 +108,14 @@ public class Route extends BaseEntity {
 		this.category = category;
 	}
 
+	public void updatedDescription(String description){ this.description = description; }
+
+	public void setPublicStatus(){ this.routeStatus = RouteStatus.PUBLIC; }
+
+	public void setPrivateStatus(){ this.routeStatus = RouteStatus.PRIVATE; }
+
 	public <T> void mapToRoute(T data){
-		if(data instanceof RouteLink routeData){
+		if (data instanceof RouteLink routeData){
 			routeLinks.add(routeData);
 		} else{
 			reviews.add((Review)data);

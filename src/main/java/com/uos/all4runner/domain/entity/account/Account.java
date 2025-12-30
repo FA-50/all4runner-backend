@@ -66,7 +66,7 @@ public class Account extends BaseEntity {
 	private List<Route> routes = new ArrayList<>();
 
 	@OneToMany(
-		mappedBy = "account",
+		mappedBy = "writedBy",
 		cascade = CascadeType.ALL,
 		orphanRemoval = true
 	)
