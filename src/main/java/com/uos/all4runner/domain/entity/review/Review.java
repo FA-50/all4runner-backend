@@ -1,6 +1,5 @@
 package com.uos.all4runner.domain.entity.review;
 
-import java.util.UUID;
 
 import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.domain.entity.common.BaseEntity;
@@ -20,24 +19,10 @@ public class Review extends BaseEntity {
 	private String content;
 
 	@ManyToOne
-	@JoinColumn(
-		name = "writed_by",
-		nullable = false,
-		foreignKey = @ForeignKey(
-			name = "fk_review_account",
-			foreignKeyDefinition = "FOREIGN KEY(writed_by) REFERENCES account(id) ON DELETE CASCADE"
-		)
-	)
+	@JoinColumn(name = "writed_by", nullable = false)
 	private Account writedBy;
 
 	@ManyToOne
-	@JoinColumn(
-		name = "route_id",
-		nullable = false,
-		foreignKey = @ForeignKey(
-			name = "fk_review_route",
-			foreignKeyDefinition = "FOREIGN KEY(route_id) REFERENCES route(id) ON DELETE CASCADE"
-		)
-	)
+	@JoinColumn(name = "route_id", nullable = false)
 	private Route route;
 }

@@ -13,7 +13,7 @@ import com.uos.all4runner.domain.entity.route.Route;
 import com.uos.all4runner.exception.CustomException;
 
 @Repository
-public interface RouteRepository extends JpaRepository<Route, UUID> {
+public interface RouteRepository extends JpaRepository<Route, UUID>, RouteRepositoryCustom {
 	default Route findByIdOrThrow(UUID accountId) {
 		return findById(accountId).orElseThrow(
 			()-> new CustomException(ErrorCode.ROUTE_NOT_FOUND)

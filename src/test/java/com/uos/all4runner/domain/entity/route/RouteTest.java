@@ -1,12 +1,13 @@
-package com.uos.all4runner.domain.route;
+package com.uos.all4runner.domain.entity.route;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.uos.all4runner.constant.RouteStatus;
-import com.uos.all4runner.domain.account.Account;
-import com.uos.all4runner.domain.category.Category;
+import com.uos.all4runner.domain.entity.account.Account;
+import com.uos.all4runner.domain.entity.category.Category;
+import com.uos.all4runner.domain.entity.route.Route;
 import com.uos.all4runner.util.AccountCreation;
 import com.uos.all4runner.util.CategoryCreation;
 
