@@ -31,7 +31,6 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
 		String name,
 		Pageable pageable
 	) {
-
 		List<AccountResponse.Search> result = queryFactory
 			.select(new QAccountResponse_Search(
 				qAccount.id,

@@ -47,6 +47,9 @@ public interface RouteService {
 	void switchRouteToPrivate(UUID accountId, UUID routeId);
 
 	@PreAuthorize("#accountId == authentication.principal.id")
+	RouteResponse.TempDetails getTempRouteDetails(UUID accountId, UUID routeId);
+
+	@PreAuthorize("#accountId == authentication.principal.id")
 	RouteResponse.Details getRouteDetails(UUID accountId, UUID routeId);
 
 	@PreAuthorize("#accountId == authentication.principal.id")

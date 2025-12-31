@@ -28,6 +28,15 @@ public interface RouteResponse {
 		}
 	}
 
+	@Schema(name = "RouteResponse.TempDetails")
+	record TempDetails(
+		UUID routeId,
+		RouteStatus routeStatus,
+		String writerName,
+		List<RouteLink> routeLinks
+	){
+	}
+
 	@Schema(name = "RouteResponse.Details")
 	record Details(
 		UUID routeId,
