@@ -25,7 +25,13 @@ public enum SuccessCode {
 	ROUTE_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, "경로가 정상적으로 수정되었습니다."),
 	TEMP_ROUTE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "계정의 모든 임시경로가 삭제되었습니다."),
 	ROUTE_DATA_RESPONSE_SUCCESS(HttpStatus.OK, "경로가 정상적으로 반환되었습니다."),
-	ROUTE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "경로가 정상적으로 삭제되었습니다.");
+	ROUTE_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "경로가 정상적으로 삭제되었습니다."),
+
+	REVIEW_CREATE_SUCCESS(HttpStatus.CREATED, "리뷰가 정상적으로 생성되었습니다."),
+	REVIEW_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, "리뷰가 정상적으로 수정되었습니다."),
+	REVIEW_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "리뷰가 정상적으로 삭제되었습니다."),
+	REVIEW_DATA_RESPONSE_SUCCESS(HttpStatus.OK, "리뷰가 정상적으로 반환되었습니다."),
+	;
 	private final HttpStatus status;
 	private final String description;
 }
