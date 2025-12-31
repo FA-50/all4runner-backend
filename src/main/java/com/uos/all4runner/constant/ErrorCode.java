@@ -24,6 +24,7 @@ public enum ErrorCode {
 
 	ROUTE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 경로가 존재하지 않습니다."),
 	ROUTE_STATUS_NOT_TEMP(HttpStatus.BAD_REQUEST, "해당 경로가 임시경로 상태가 아닙니다."),
+	ROUTE_STATUS_NOT_VALID(HttpStatus.BAD_REQUEST, "해당 경로가 조회 불가능한 상태입니다."),
 
 	NODE_NOT_INCLUDE(HttpStatus.BAD_REQUEST, "경로 검색 시 활용할 노드가 포함되어있지 않습니다."),
 
