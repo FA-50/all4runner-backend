@@ -62,7 +62,7 @@ public class AdminControllerAccount implements AdminAccountSwaggerSupporter {
 	}
 
 	@Override
-	@DeleteMapping("/{accountId}/hard-delete")
+	@DeleteMapping("/{accountId}/hard")
 	public ResponseEntity<ApiResultResponse<Void>> deleteAccountPermanently(
 		@PathVariable	UUID accountId
 	) {
@@ -74,7 +74,7 @@ public class AdminControllerAccount implements AdminAccountSwaggerSupporter {
 	}
 
 	@Override
-	@PatchMapping("/{accountId}/activate")
+	@PatchMapping("/{accountId}/restore")
 	public ResponseEntity<ApiResultResponse<Void>> restoreAccount(
 		@PathVariable	UUID accountId
 	) {
