@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/admin/accounts")
 @RequiredArgsConstructor
-public class AccountAdminController implements AccountAdminSwaggerSupporter{
+public class AdminControllerAccount implements AdminAccountSwaggerSupporter {
 	private final AccountService accountService;
 
 	@Override

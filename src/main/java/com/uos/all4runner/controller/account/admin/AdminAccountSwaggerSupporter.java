@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "AccountAdmin", description = "관리자용 계정 관련 API")
-public interface AccountAdminSwaggerSupporter extends SwaggerSupoorter {
+public interface AdminAccountSwaggerSupporter extends SwaggerSupoorter {
 
 	@Operation(
 		summary = "ADMIN 계정을 생성합니다.",
