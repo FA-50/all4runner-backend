@@ -25,11 +25,13 @@ public enum ErrorCode {
 	ROUTE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 경로가 존재하지 않습니다."),
 	ROUTE_STATUS_NOT_TEMP(HttpStatus.BAD_REQUEST, "해당 경로가 임시경로 상태가 아닙니다."),
 	ROUTE_STATUS_NOT_VALID(HttpStatus.BAD_REQUEST, "해당 경로가 조회 불가능한 상태입니다."),
+	ROUTE_STATUS_PRIVATE(HttpStatus.BAD_REQUEST, "해당 경로의 상태가 비공개이므로 접근이 불가능합니다."),
 
 	NODE_NOT_INCLUDE(HttpStatus.BAD_REQUEST, "경로 검색 시 활용할 노드가 포함되어있지 않습니다."),
-
 	NODE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 위치에서 근접한 노드를 찾을 수 없습니다."),
-	BUFFER_NOT_CREATED(HttpStatus.BAD_REQUEST, "설정된 거리에 해당하는 노드를 찾지 못해 버퍼를 생성할 수 없습니다.");
+	BUFFER_NOT_CREATED(HttpStatus.BAD_REQUEST, "설정된 거리에 해당하는 노드를 찾지 못해 버퍼를 생성할 수 없습니다."),
+
+	REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 리뷰가 존재하지 않습니다."),;
 	private final HttpStatus status;
 	private final String message;
 }

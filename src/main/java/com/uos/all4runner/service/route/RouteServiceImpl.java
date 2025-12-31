@@ -224,22 +224,13 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	private void checkModifyPermission(UUID currentId, UUID subjectId) {
-		Account subjectAccount = accountRepository.findByIdOrThrow(subjectId);
-		if (subjectAccount.getRole() == AccountRole.ADMIN ||
-			subjectAccount.getRole() == AccountRole.SUPERADMIN) {
-			PreConditions.validate(
+		Account currentAccount = accountRepository.findByIdOrThrow(currentId);
+		PreConditions.validate(
+			currentAccount.getRole().equals(AccountRole.ADMIN) |
+				currentAccount.getRole().equals(AccountRole.SUPERADMIN) |
 				currentId.equals(subjectId),
-				ErrorCode.ACCESS_NOT_ALLOWED
-			);
-		} else {
-			Account currentAccount = accountRepository.findByIdOrThrow(currentId);
-			PreConditions.validate(
-				currentAccount.getRole().equals(AccountRole.ADMIN) |
-					currentAccount.getRole().equals(AccountRole.SUPERADMIN) |
-					currentId.equals(subjectId),
-				ErrorCode.ACCESS_NOT_ALLOWED
-			);
-		}
+			ErrorCode.ACCESS_NOT_ALLOWED
+		);
 	}
 
 	private Pair<Double,Double> calculateKcalAndTime(
