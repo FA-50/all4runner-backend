@@ -31,7 +31,11 @@ public class ReviewServiceImpl implements ReviewService {
 	private final RouteRepository routeRepository;
 
 	@Override
-	public void createReview(UUID accountId, UUID routeId, ReviewRequest.Create request) {
+	public void createReview(
+		UUID accountId,
+		UUID routeId,
+		ReviewRequest.Create request
+	) {
 		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
 
 		PreConditions.validate(
@@ -49,7 +53,11 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void updateReview(UUID accountId, UUID reviewId, ReviewRequest.Update request) {
+	public void updateReview(
+		UUID accountId,
+		UUID reviewId,
+		ReviewRequest.Update request
+	) {
 		Review review = reviewRepository.findByIdOrThrow(reviewId);
 
 		PreConditions.validate(
@@ -61,7 +69,11 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Page<ReviewResponse.Search> getReviewsByMember(UUID accountId, UUID routeId, Pageable pageable) {
+	public Page<ReviewResponse.Search> getReviewsByMember(
+		UUID accountId,
+		UUID routeId,
+		Pageable pageable
+	) {
 		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
 
 		if (foundedRoute.getRouteStatus().equals(RouteStatus.PRIVATE))

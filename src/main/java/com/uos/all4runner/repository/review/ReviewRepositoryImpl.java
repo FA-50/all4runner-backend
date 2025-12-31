@@ -44,7 +44,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 			.where(review.route.id.eq(routeId))
 			.orderBy(review.id.desc())
 			.offset(pageable.getOffset())
-			.limit(pageable.getPageNumber())
+			.limit(pageable.getPageSize())
 			.fetch();
 
 		int total = jpaQueryFactory
