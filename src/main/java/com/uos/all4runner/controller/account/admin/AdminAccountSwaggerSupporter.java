@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "AccountAdmin", description = "관리자용 계정 관련 API")
+@Tag(name = "AdminAccount", description = "관리자용 계정 관련 API")
 public interface AdminAccountSwaggerSupporter extends SwaggerSupoorter {
 
 	@Operation(

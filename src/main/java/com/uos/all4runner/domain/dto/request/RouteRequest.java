@@ -36,7 +36,7 @@ public interface RouteRequest {
 
 	@Schema(name = "RouteRequest.UpdateDescription")
 	record UpdateDescription(
-		String description
+		@NotBlank String description
 	){
 	}
 }

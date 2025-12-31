@@ -9,6 +9,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.uos.all4runner.domain.dto.request.RouteRequest;
 import com.uos.all4runner.domain.dto.response.RouteResponse;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Route", description = "경로 관련 Api")
 public interface RouteService {
 
 	@PreAuthorize("#accountId == authentication.principal.id")
