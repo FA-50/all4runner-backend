@@ -145,10 +145,34 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
+	public RouteResponse.TempDetails getTempRouteDetails(UUID accountId, UUID routeId) {
+		checkReadPermission(accountId, routeId);
+
+		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+
+		PreConditions.validate(
+			foundedRoute.getRouteStatus().equals(RouteStatus.TEMP),
+			ErrorCode.ROUTE_STATUS_NOT_TEMP
+		);
+		return new RouteResponse.TempDetails(
+			foundedRoute.getId(),
+			foundedRoute.getRouteStatus(),
+			foundedRoute.getAccount().getName(),
+			foundedRoute.getRouteLinks()
+		);
+	}
+
+	@Override
 	public RouteResponse.Details getRouteDetails(UUID accountId, UUID routeId) {
 		checkReadPermission(accountId, routeId);
 
 		Route foundedRoute = routeRepository.findByIdOrThrow(routeId);
+
+		PreConditions.validate(
+			!foundedRoute.getRouteStatus().equals(RouteStatus.TEMP),
+			ErrorCode.ROUTE_STATUS_NOT_VALID
+		);
+
 		return new RouteResponse.Details(
 			foundedRoute.getId(),
 			foundedRoute.getRouteStatus(),
