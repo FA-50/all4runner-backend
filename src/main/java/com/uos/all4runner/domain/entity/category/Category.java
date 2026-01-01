@@ -32,7 +32,7 @@ public class Category extends BaseEntity {
 		cascade = CascadeType.ALL,
 		orphanRemoval = true
 	)
-	private List<Category> categorys = new ArrayList<Category>();
+	private List<Category> categories = new ArrayList<Category>();
 
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
@@ -68,6 +68,8 @@ public class Category extends BaseEntity {
 	}
 
 	public void mapChildCategory(Category childCategory) {
-		this.categorys.add(childCategory);
+		this.categories.add(childCategory);
 	}
+
+	public void update(String categoryNmae){ this.name = categoryNmae; }
 }

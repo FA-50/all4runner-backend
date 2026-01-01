@@ -23,6 +23,13 @@ values(
        null,
        '2025-12-25 18:16:33.329914+09',
        '2025-12-25 18:16:33.329914+09'
+      ),
+      (
+          '1cd40046-6dcf-4172-99eb-2b6f7377bc81',
+          '서울특별시',
+          null,
+          '2025-12-25 18:16:33.329914+09',
+          '2025-12-25 18:16:33.329914+09'
       );
 
 
@@ -60,7 +67,3 @@ set geom = ST_SetSRID(geom,4326);
 CREATE EXTENSION IF NOT EXISTS pgrouting;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 제약관계 정의
-alter table routelink add constraint fk_route_ondelete
-foreign key(route_id) references route(id)
-on delete cascade;
