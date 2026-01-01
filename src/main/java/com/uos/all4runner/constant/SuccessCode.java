@@ -31,6 +31,11 @@ public enum SuccessCode {
 	REVIEW_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, "리뷰가 정상적으로 수정되었습니다."),
 	REVIEW_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "리뷰가 정상적으로 삭제되었습니다."),
 	REVIEW_DATA_RESPONSE_SUCCESS(HttpStatus.OK, "리뷰가 정상적으로 반환되었습니다."),
+
+	CATEGORY_CREATE_SUCCESS(HttpStatus.CREATED, "카테고리가 정상적으로 생성되었습니다."),
+	CATEGORY_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, "카테고리가 정상적으로 수정되었습니다."),
+	CATEGORY_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "카테고리가 정상적으로 삭제되었습니다."),
+	CATEGORY_DATA_RESPONSE_SUCCESS(HttpStatus.OK, "카테고리가 정상적으로 반환되었습니다."),
 	;
 	private final HttpStatus status;
 	private final String description;
