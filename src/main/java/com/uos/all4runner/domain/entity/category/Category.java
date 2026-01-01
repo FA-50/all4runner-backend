@@ -70,4 +70,6 @@ public class Category extends BaseEntity {
 	public void mapChildCategory(Category childCategory) {
 		this.categories.add(childCategory);
 	}
+
+	public void update(String categoryNmae){ this.name = categoryNmae; }
 }
