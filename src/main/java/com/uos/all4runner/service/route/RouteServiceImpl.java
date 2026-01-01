@@ -145,6 +145,7 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RouteResponse.TempDetails getTempRouteDetails(UUID accountId, UUID routeId) {
 		checkReadPermission(accountId, routeId);
 
@@ -163,6 +164,7 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public RouteResponse.Details getRouteDetails(UUID accountId, UUID routeId) {
 		checkReadPermission(accountId, routeId);
 
@@ -187,6 +189,7 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public 	Page<RouteResponse.Search> searchRoutes(
 		UUID accountId,
 		UUID subjectId,
@@ -205,6 +208,7 @@ public class RouteServiceImpl implements RouteService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<RouteResponse.Search> searchPublicRoutes(String categoryName, Pageable pageable) {
 		return routeRepository.searchPublicRoutes(categoryName, pageable);
 	}

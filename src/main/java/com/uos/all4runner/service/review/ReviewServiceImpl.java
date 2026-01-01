@@ -69,6 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<ReviewResponse.Search> getReviewsByMember(
 		UUID accountId,
 		UUID routeId,
@@ -86,6 +87,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<ReviewResponse.Search> getReviewsByAdmin(UUID routeId, Pageable pageable) {
 		return reviewRepository.searchByRoute(routeId, pageable);
 	}
