@@ -22,24 +22,16 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 		);
 	}
 
+	default Category findByIdOrThrow(UUID categoryId){
+		return findById(categoryId).orElseThrow(
+			()-> new CustomException(ErrorCode.CATEGORY_NOT_FOUND)
+		);
+	}
+
 	@Query("""
 		SELECT c
 			FROM Category c
 			WHERE c.parentCategory is null
 	""")
 	List<Category> findRootCateories();
-
-	@Query("""
-		SELECT c.categories
-			FROM Category c
-			WHERE c.id = ?1
-	""")
-	List<Category> findChildCateories(UUID categoryId);
-
-	@Query("""
-		SELECT c.parentCategory
-			FROM Category c
-			WHERE c.id = ?1
-	""")
-	Category findParentCateories(UUID categoryId);
 }

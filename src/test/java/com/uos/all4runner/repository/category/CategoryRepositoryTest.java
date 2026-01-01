@@ -42,26 +42,4 @@ class CategoryRepositoryTest {
 		Assertions.assertTrue(foundedCategories.size() == 1);
 		Assertions.assertEquals(category.getId(), foundedCategories.get(0).getId());
 	}
-
-	@Test
-	void 자식카테고리_조회_성공(){
-		// when
-		List<Category> foundedChildCategories = categoryRepository
-			.findChildCateories(category.getId());
-
-		// then
-		Assertions.assertTrue(foundedChildCategories.size() == 1);
-		Assertions.assertEquals(childCategory.getId(), foundedChildCategories.get(0).getId());
-	}
-
-	@Test
-	void 부모카테고리_조회_성공(){
-		// when
-		Category foundedParentCategories = categoryRepository
-			.findParentCateories(childCategory.getId());
-
-		// then
-		Assertions.assertNotNull(foundedParentCategories);
-		Assertions.assertEquals(category.getId(), foundedParentCategories.getId());
-	}
 }
