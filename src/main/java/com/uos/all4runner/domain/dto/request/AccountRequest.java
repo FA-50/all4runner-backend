@@ -26,12 +26,6 @@ public interface AccountRequest {
 		@Range(min = 1, max = 150, message = "1 ~ 150 kg 범위 이내 체중을 작성해야합니다.") Double weight
 		){
 	}
-	@Schema(name = "AccountRequest.Login")
-	record Login(
-		@NotBlank String email,
-		@NotBlank String password
-	){
-	}
 
 	@Schema(name = "AccountRequest.Update")
 	record Update(

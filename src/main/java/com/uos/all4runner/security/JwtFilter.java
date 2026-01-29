@@ -7,6 +7,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.uos.all4runner.constant.ErrorCode;
+import com.uos.all4runner.exception.CustomException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +30,13 @@ public class JwtFilter extends OncePerRequestFilter {
 	) throws ServletException, IOException{
 		String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
+		String uri = request.getRequestURI();
+
+		if (uri.startsWith("/api/auth/")) {
+			chain.doFilter(request, response);
+			return;
+		}
+
 		if (authorizationHeader == null){
 			chain.doFilter(request, response);
 			return;
@@ -34,7 +44,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
 		String authToken = authorizationHeader.substring(TOKEN_PREFIX.length());
 
-		if(!jwtService.validate(authToken)){
+		if (authToken.isBlank())
+			throw new CustomException(ErrorCode.TOKEN_NOT_FOUND);
+
+		if(!jwtService.validateAccessToken(authToken)){
 			chain.doFilter(request, response);
 			return;
 		}

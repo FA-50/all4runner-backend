@@ -3,6 +3,7 @@ package com.uos.all4runner.exception;
 import org.springframework.http.HttpStatus;
 
 import com.uos.all4runner.constant.ErrorCode;
+import com.uos.all4runner.constant.TokenValid;
 
 import lombok.Getter;
 
@@ -15,5 +16,9 @@ public class CustomException extends RuntimeException {
 		super(errorCode.getMessage());
 		this.message = errorCode.getMessage();
 		this.status = errorCode.getStatus();
+	}
+	public CustomException(TokenValid tokenValid) {
+		super(tokenValid.getMessage());
+		this.message = tokenValid.getMessage();
 	}
 }

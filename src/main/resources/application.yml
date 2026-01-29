@@ -1,6 +1,13 @@
 spring:
   application:
     name: All4Runner
+  data:
+    redis:
+      host: ${redis.host:localhost}
+      port: ${redis.host:6379}
+    datasource:
+      hikari:
+        maximum-pool-size: 100
   datasource:
     url: jdbc:postgresql://localhost:5432/All4Runner
     username: ${DB_USERNAME:postgres}
@@ -14,6 +21,16 @@ spring:
   sql:
     init:
       mode: always
+
+logging:
+  config:
+    classpath:logback.xml
+  level:
+    com:
+      uos:
+        all4runner:
+          common:
+            filter: trace
 
 jwt:
   keyId: ${keyId:topofthehead}

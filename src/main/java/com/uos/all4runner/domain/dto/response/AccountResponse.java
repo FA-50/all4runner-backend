@@ -37,11 +37,4 @@ public interface AccountResponse {
 		public Details{
 		}
 	}
-
-	@Schema(name = "AccountResponse.Login")
-	record Login(
-		String accessToken,
-		String refreshToken
-	){
-	}
 }

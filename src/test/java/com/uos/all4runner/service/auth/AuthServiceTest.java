@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.uos.all4runner.constant.ErrorCode;
 import com.uos.all4runner.domain.dto.request.AccountRequest;
+import com.uos.all4runner.domain.dto.request.AuthRequest;
 import com.uos.all4runner.domain.entity.account.Account;
 import com.uos.all4runner.exception.CustomException;
 import com.uos.all4runner.repository.account.AccountRepository;
@@ -58,7 +59,7 @@ class AuthServiceTest {
 	@Test
 	void 계정로그인_성공(){
 		// begin
-		AccountRequest.Login loginDto = new AccountRequest.Login(
+		AuthRequest.Login loginDto = new AuthRequest.Login(
 			testMemberAccount.getEmail(),
 			AccountCreation.PASSWORD.getFirst()
 		);
@@ -90,7 +91,7 @@ class AuthServiceTest {
 	@Test
 	void 계정_로그인_실패__다른_패스워드(){
 		// begin
-		AccountRequest.Login loginDto = new AccountRequest.Login(
+		AuthRequest.Login loginDto = new AuthRequest.Login(
 			testMemberAccount.getEmail(),
 			"incorrectPassword@!#@!#!"
 		);
@@ -110,7 +111,7 @@ class AuthServiceTest {
 	void 계정_로그인_실패__계정_삭제됨(){
 		// begin
 		testMemberAccount.delete();
-		AccountRequest.Login loginDto = new AccountRequest.Login(
+		AuthRequest.Login loginDto = new AuthRequest.Login(
 			testMemberAccount.getEmail(),
 			AccountCreation.PASSWORD.getFirst()
 		);

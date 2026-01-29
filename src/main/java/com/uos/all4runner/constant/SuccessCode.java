@@ -11,6 +11,8 @@ public enum SuccessCode {
 	REQUEST_SUCCESS(HttpStatus.NO_CONTENT, "요청이 정상적으로 수행되었습니다."),
 	LOGIN_SUCCESS(HttpStatus.OK, "로그인이 정상적으로 수행되었습니다."),
 
+	ACCESS_TOKEN_REFRESH_SUCCESS(HttpStatus.CREATED, "토큰이 성공적으로 재발급되었습니다."),
+
 	ACCOUNT_CREATE_SUCCESS(HttpStatus.CREATED, "계정이 정상적으로 생성되었습니다."),
 	ACCOUNT_DATA_RESPONSE_SUCCESS(HttpStatus.OK, "계정이 정상적으로 반환되었습니다."),
 	ACCOUNT_RESTORE_SUCCESS(HttpStatus.NO_CONTENT, "계정이 성공적으로 복구되었습니다."),

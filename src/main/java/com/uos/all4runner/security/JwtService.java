@@ -9,11 +9,16 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.stereotype.Component;
 
 import com.uos.all4runner.constant.AccountRole;
+import com.uos.all4runner.constant.ErrorCode;
+import com.uos.all4runner.constant.TokenValid;
 import com.uos.all4runner.domain.entity.account.Account;
+import com.uos.all4runner.exception.CustomException;
 import com.uos.all4runner.repository.account.AccountRepository;
+import com.uos.all4runner.repository.refreshtoken.RefreshTokenRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +31,7 @@ public class JwtService {
 	private static final String ROLE_CLAIM_KEY = "role";
 	private static final String EMAIL_CLAIM_KEY = "email";
 	private final AccountRepository accountRepository;
+	private final RefreshTokenRepository refreshTokenRepository;
 
 	public String issue(UUID accountId, Long expirationMinute){
 
@@ -41,17 +47,21 @@ public class JwtService {
 			.issuedAt(Instant.now())
 			.expiresAt(Instant.now().plusSeconds(60 * expirationMinute))
 			.build();
-
 		return jwtEncoder
 			.encode(JwtEncoderParameters.from(claims))
 			.getTokenValue();
 	}
-	public boolean validate(String token){
+
+	public boolean validateAccessToken(String token) {
 		try {
 			jwtDecoder.decode(token);
 			return true;
+		} catch (JwtValidationException e) {
+			// exp 만료, nbf 위반 등
+			throw new CustomException(TokenValid.TIME_OUT);
 		} catch (JwtException e) {
-			return false;
+			// 서명 불일치, 포맷 오류 등
+			throw new CustomException(TokenValid.INVALID);
 		}
 	}
 
